@@ -201,6 +201,8 @@ $idProduct = $_GET['id'];
 $sql_get_product = "SELECT * FROM products WHERE idProduct = $idProduct";
 $query_get_product = mysqli_query($connect, $sql_get_product);
 $product = mysqli_fetch_array($query_get_product);
+
+$quantityProduct = 1;
 ?>
 
 <body>
@@ -248,18 +250,17 @@ $product = mysqli_fetch_array($query_get_product);
           <div class="product__ROM" style="padding: 10px">
             <h2>Dung lượng lưu trữ: <?php echo $product['ROM'] ?></h2>
           </div>
-
-
-
-          <div class="product__wrap">
-            <div class="product__amount">
-              <label for="">Số lượng: </label>
-              <input type="button" value="-" class="control" onclick="tru()" id="cong">
-              <input type="text" value="1" class="text-input" id="text_so_luong" onkeypress='validate(event)'>
-              <input type="button" value="+" class="control" onclick="cong()">
+          <form class="myForm" action="" method="POST">
+            <div class="product__wrap">
+              <div class="product__amount">
+                <label for="">Số lượng: </label>
+                <input type="button" value="-" class="control" onclick="tru()">
+                <input type="text" class="qtt text-input" name="qtt" value="<?php echo $quantityProduct ?>">
+                <input type="button" value="+" class="control" onclick="cong()">
+              </div>
+              <button type="submit" class="add-cart" onclick="fadeInModal()">Thêm vào giỏ</button>
             </div>
-            <button class="add-cart" onclick="fadeInModal()">Thêm vào giỏ</button>
-          </div>
+          </form>
           <div class="product__shopnow">
             <button class="shopnow">Mua ngay</button>
             <span class="home-product-item__like home-product-item__like--liked">
@@ -407,6 +408,20 @@ $product = mysqli_fetch_array($query_get_product);
     });
   </script>
   <script>
+    const qttProduct = document.querySelector(".qtt");
+    const myForm = document.querySelector(".myForm");
+    myForm.action = "pages/main/giohang/themgiohang.php?idP=<?php echo $product['idProduct'] ?>&qtt=" + qttProduct.value;
+
+    function tru() {
+      qttProduct.value = parseInt(qttProduct.value) - 1;
+      myForm.action = "pages/main/giohang/themgiohang.php?idP=<?php echo $product['idProduct'] ?>&qtt=" + qttProduct.value;
+    }
+
+    function cong() {
+      qttProduct.value = parseInt(qttProduct.value) + 1;
+      myForm.action = "pages/main/giohang/themgiohang.php?idP=<?php echo $product['idProduct'] ?>&qtt=" + qttProduct.value;
+    }
+
     function fadeInModal() {
       $('.alert').fadeIn();
       $('.overlay1').fadeIn();

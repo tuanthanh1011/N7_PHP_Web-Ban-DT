@@ -94,7 +94,7 @@ $query_dssphot = mysqli_query($connect, $sql_dssphot);
                     <img class="card-img-top" src="<?php echo $row_dsspnew['image'] ?>" alt="Card image cap">
                     <form action="" class="hover-icon hidden-sm hidden-xs">
                       <input type="hidden">
-                      <a href="index.php?quanly=productDetail&id=<?php echo $row_dsspnew['idProduct'] ?>" class="btn-add-to-cart" title="Mua ngay">
+                      <a href="index.php?quanly=productDetail&id=<?php echo $row_dsspnew['idProduct'] ?>" class="btn-add-to-cart" title="Thêm vào giỏ hàng">
                         <i class="fas fa-cart-plus"></i>
                       </a>
                       <a data-toggle="modal" data-target="#myModal" class="quickview" title="Xem nhanh">
@@ -307,7 +307,7 @@ $query_dssphot = mysqli_query($connect, $sql_dssphot);
                       <img class="card-img-top" src="<?php echo $row_dssp['image'] ?>" alt="Card image cap">
                       <form action="" class="hover-icon hidden-sm hidden-xs">
                         <input type="hidden">
-                        <a href="index.php?quanly=productDetail&id=<?php echo $row_dssp['idProduct'] ?>" class="btn-add-to-cart" title="Mua ngay">
+                        <a href="index.php?quanly=productDetail&id=<?php echo $row_dssp['idProduct'] ?>" class="btn-add-to-cart" title="Thêm vào giỏ hàng">
                           <i class="fas fa-cart-plus"></i>
                         </a>
                         <a data-toggle="modal" data-target="#myModal" class="quickview" title="Xem nhanh">

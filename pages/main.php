@@ -33,7 +33,7 @@
             include("main/Dangnhap.php");
         }
         if ($bientam == 'cart') {
-            include("main/cart.php");
+            include("main/giohang/cart.php");
         }
         if ($bientam == 'listlike') {
             include("main/listlike.php");
