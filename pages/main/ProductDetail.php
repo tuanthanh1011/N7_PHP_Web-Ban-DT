@@ -203,6 +203,8 @@ $idProduct = $_GET['id'];
 $sql_get_product = "SELECT * FROM products WHERE idProduct = $idProduct";
 $query_get_product = mysqli_query($connect, $sql_get_product);
 $product = mysqli_fetch_array($query_get_product);
+
+$quantityProduct = 1;
 ?>
 
 <body>
@@ -449,6 +451,20 @@ $product = mysqli_fetch_array($query_get_product);
     });
   </script>
   <script>
+    const qttProduct = document.querySelector(".qtt");
+    const myForm = document.querySelector(".myForm");
+    myForm.action = "pages/main/giohang/themgiohang.php?idP=<?php echo $product['idProduct'] ?>&qtt=" + qttProduct.value;
+
+    function tru() {
+      qttProduct.value = parseInt(qttProduct.value) - 1;
+      myForm.action = "pages/main/giohang/themgiohang.php?idP=<?php echo $product['idProduct'] ?>&qtt=" + qttProduct.value;
+    }
+
+    function cong() {
+      qttProduct.value = parseInt(qttProduct.value) + 1;
+      myForm.action = "pages/main/giohang/themgiohang.php?idP=<?php echo $product['idProduct'] ?>&qtt=" + qttProduct.value;
+    }
+
     function fadeInModal() {
       $('.alert').fadeIn();
       $('.overlay1').fadeIn();

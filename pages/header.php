@@ -74,11 +74,26 @@ if (isset($_POST['search-btn'])) {
 // Số lượng bản ghi product 
 //$count = mysqli_fetch_assoc($query_get_count);
 
-$sql_get_count_cart = "SELECT COUNT(*) AS record_count FROM cart_detail where idCart = 1";
-$query_get_count_cart = mysqli_query($connect, $sql_get_count_cart);
+$count1['record_count'] = 0;
 
-// Số lượng bản ghi product 
-$count1 = mysqli_fetch_assoc($query_get_count_cart);
+if (isset($_SESSION['id_user'])) {
+    $id_user = $_SESSION['id_user'];
+    if ($id_user) {
+        $sql_get_idCart = "SELECT idCart FROM cart WHERE idUser = $id_user and statusCart = 0";
+        $query_get_idCart = mysqli_query($connect, $sql_get_idCart);
+
+        $idCartResult = mysqli_fetch_array($query_get_idCart);
+
+        if (!$idCartResult == null) {
+            $idCart = $idCartResult['idCart'];
+            $sql_get_count_cart = "SELECT COUNT(*) AS record_count FROM cart_detail where idCart = $idCart";
+            $query_get_count_cart = mysqli_query($connect, $sql_get_count_cart);
+
+            // Số lượng bản ghi product 
+            $count1 = mysqli_fetch_assoc($query_get_count_cart);
+        }
+    }
+}
 ?>
 
 <header class="header">
