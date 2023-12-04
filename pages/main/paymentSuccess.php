@@ -19,7 +19,7 @@
 session_start();
 include "../../admin/config/connect.php";
 $id_user = $_SESSION['id_user'];
-$sql_pay = "UPDATE cart SET payments = 'Thanh toán qua Momo', statusCart = 1 WHERE idUser = $id_user";
+$sql_pay = "UPDATE cart SET payments = 'Thanh toán qua Momo', statusCart = 1 WHERE idUser = $id_user and statusCart = 0";
 $query_pay = mysqli_query($connect, $sql_pay);
 ?>
 

@@ -60,11 +60,10 @@ $query_get_user = mysqli_query($connect, $sql_get_user);
 $row_user = mysqli_fetch_array($query_get_user);
 
 if (isset($_POST['thanhToan'])) {
-    $payments = $_POST['payments'];
-    $sql_pay = "UPDATE cart SET payments = '$payments', statusCart = 1 WHERE idUser = $id_user";
+    $sql_pay = "UPDATE cart SET payments = 'Thanh toán khi nhận hàng.', statusCart = 1 WHERE idUser = $id_user and statusCart = 0";
     $query_pay = mysqli_query($connect, $sql_pay);
     echo "<script>
-      alert('Thanh toán thành công!')
+      alert('Đặt hàng thành công!')
       location.href = 'index.php'
     </script>";
 }
