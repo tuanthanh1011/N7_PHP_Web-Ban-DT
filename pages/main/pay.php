@@ -44,12 +44,17 @@
     @media (max-width: 739px) {}
 </style>
 <?php
+$id_user = $_SESSION['id_user'];
 
-$sql_total_cart = "SELECT SUM(sellingPrice * quantity) as total FROM cart_detail inner join products on cart_detail.idProduct = products.idProduct where idCart = 1";
+$sql_get_idCart = "SELECT idCart FROM cart WHERE idUser = $id_user and statusCart = 0";
+$query_get_idCart = mysqli_query($connect, $sql_get_idCart);
+$idCartResult = mysqli_fetch_array($query_get_idCart);
+$idCart = $idCartResult['idCart'];
+
+$sql_total_cart = "SELECT SUM(sellingPrice * quantity) as total FROM cart_detail inner join products on cart_detail.idProduct = products.idProduct where idCart = $idCart";
 $query_total_cart = mysqli_query($connect, $sql_total_cart);
 $total_cart = mysqli_fetch_array($query_total_cart);
 
-$id_user = $_SESSION['id_user'];
 $sql_get_user = "SELECT * FROM users WHERE idUser = $id_user";
 $query_get_user = mysqli_query($connect, $sql_get_user);
 $row_user = mysqli_fetch_array($query_get_user);
@@ -58,6 +63,10 @@ if (isset($_POST['thanhToan'])) {
     $payments = $_POST['payments'];
     $sql_pay = "UPDATE cart SET payments = '$payments', statusCart = 1 WHERE idUser = $id_user";
     $query_pay = mysqli_query($connect, $sql_pay);
+    echo "<script>
+      alert('Thanh toán thành công!')
+      location.href = 'index.php'
+    </script>";
 }
 ?>
 
@@ -70,7 +79,8 @@ if (isset($_POST['thanhToan'])) {
                 <div class="row">
                     <div class="col-lg-6 col-12">
                         <div class="main">
-                            <form action="" method="POST">
+                            <form action="momoPayment.php" method="POST" enctype="application/x-www-form-urlencoded" class="myForm">
+                                <input type="hidden" name="totalCart" value="<?php echo number_format($total_cart['total']) ?>">
                                 <div class="main-content">
                                     <div class="d-flex justify-content-between">
                                         <div class="main-title mt-4">
@@ -99,33 +109,22 @@ if (isset($_POST['thanhToan'])) {
                                             <input id="sdt" type="text" class="form-control" value="<?php echo $row_user['phone'] ?>" readonly>
                                             <span class="form-message"></span>
                                         </div>
-                                        <div class="fieldset-phone form-group">
-                                            <label for="sdt" class="form-label mb-4" for="">Hình thức thanh toán</label>
-                                            <br />
-                                            <div class="d-flex">
-                                                <input type="radio" name="payments" value="Thanh toán trực tiếp">
-                                                <p style="font-size: 16px; margin:0 0 0 8px">Thanh toán trực tiếp</p>
-                                            </div>
-                                            <br />
-                                            <div class="d-flex">
-                                                <input type="radio" name="payments" value="Thanh toán qua momo">
-                                                <p style="font-size: 16px; margin:0 0 0 8px">Thanh toán qua ví Momo</p>
-                                            </div>
-                                            <p></p>
-                                            <span class="form-message"></span>
-                                        </div>
-
                                     </div>
                                 </div>
-                                <div class="main-footer">
-                                    <div class="continue">
+                                <div class="main-footer mb-4" style="flex-direction: column; align-items: flex-start;">
+                                    <div class="d-flex">
+                                        <div class="pay mr-4">
+                                            <button name="thanhToan" onclick="handlePayOff()" type="submit" value="Thanh toán" class="btn-pay form-submit">Thanh toán</button>
+                                        </div>
+                                        <div class="pay ml-4">
+                                            <button name="thanhToanMomo" onclick="handleSubmit()" type="submit" value="Thanh toán" class="btn-pay form-submit">Thanh toán MOMO</button>
+                                        </div>
+                                    </div>
+                                    <div class="continue mt-4">
                                         <a href="index.php?quanly=cart">
                                             <i class="fi-rs-angle-left"></i>
                                             Giỏ hàng
                                         </a>
-                                    </div>
-                                    <div class="pay">
-                                        <button name="thanhToan" type="submit" value="Thanh toán" class="btn-pay form-submit">Thanh toán</button>
                                     </div>
                                 </div>
                             </form>
@@ -169,7 +168,13 @@ if (isset($_POST['thanhToan'])) {
     </div>
 </body>
 <script>
-    function handle(event) {
-        event.preventDefault()
+    var myForm = document.querySelector(".myForm");
+
+    function handlePayOff() {
+        myForm.action = "";
+    }
+
+    function handleSubmit() {
+        myForm.action = "pages/main/momoPayment.php"
     }
 </script>

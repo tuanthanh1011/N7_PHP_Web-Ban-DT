@@ -152,9 +152,19 @@
                           </div>
                           <div class="col-md-3 col-12">
                             <div class="cart-quantity">
-                              <a href="pages/main/giohang/suasoluong.php?tru=<?php echo $row_listcart['idProduct'] ?>">
+                              <?php
+                              if ($row_listcart['quantity'] > 1) {
+                              ?>
+                                <a href="pages/main/giohang/suasoluong.php?tru=<?php echo $row_listcart['idProduct'] ?>">
+                                  <input type="button" value="-" class="control">
+                                </a>
+                              <?php
+                              } else {
+                              ?>
                                 <input type="button" value="-" class="control">
-                              </a>
+                              <?php
+                              }
+                              ?>
                               <input type="text" value="<?php echo $row_listcart['quantity'] ?>" class="text-input" id="text_so_luong-<?php echo $row_listcart['idProduct'] ?>">
                               <a href="pages/main/giohang/suasoluong.php?cong=<?php echo $row_listcart['idProduct'] ?>">
                                 <input type="button" value="+" class="control">

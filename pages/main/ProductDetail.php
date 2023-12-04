@@ -413,8 +413,10 @@ $quantityProduct = 1;
     myForm.action = "pages/main/giohang/themgiohang.php?idP=<?php echo $product['idProduct'] ?>&qtt=" + qttProduct.value;
 
     function tru() {
-      qttProduct.value = parseInt(qttProduct.value) - 1;
-      myForm.action = "pages/main/giohang/themgiohang.php?idP=<?php echo $product['idProduct'] ?>&qtt=" + qttProduct.value;
+      if (qttProduct.value > 1) {
+        qttProduct.value = parseInt(qttProduct.value) - 1;
+        myForm.action = "pages/main/giohang/themgiohang.php?idP=<?php echo $product['idProduct'] ?>&qtt=" + qttProduct.value;
+      }
     }
 
     function cong() {
