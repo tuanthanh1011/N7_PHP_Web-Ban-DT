@@ -132,10 +132,16 @@ if (isset($_SESSION['id_user'])) {
                         <div style="display: flex; justify-content: space-between">
                             <h3 class="title-heading">Gửi thông tin</h3>
                             <div>
-                                <i style="font-size: 16px;" class="fa fa-edit"></i>
-                                <a style="text-decoration: none; color: black" href="index.php?quanly=thongtin&by=pay">
-                                    Thay đổi
-                                </a>
+                                <?php
+                                if (isset($_SESSION['id_user'])) {
+                                ?>
+                                    <i style="font-size: 16px;" class="fa fa-edit"></i>
+                                    <a style="text-decoration: none; color: black" href="index.php?quanly=thongtin&by=pay">
+                                        Thay đổi
+                                    </a>
+                                <?php
+                                }
+                                ?>
                             </div>
                         </div>
                         <?php
