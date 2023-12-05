@@ -112,10 +112,30 @@ $query_dssphot = mysqli_query($connect, $sql_dssphot);
                     </div>
                     <div class="home-product-item__action">
                       <span class="home-product-item__like home-product-item__like--liked">
-                        <i class="home-product-item__like-icon-empty far fa-heart"></i>
-                        <!-- <i class="home-product-item__like-icon-fill fas fa-heart"></i> -->
-                        <a href="pages/main/sanphamyeuthich.php?id=<?php echo $row_dsspnew['idProduct'];?>"><i class="home-product-item__like-icon-fill fas fa-heart"></i></a>
+                        <?php
+                        $idProduct_spnew = $row_dsspnew['idProduct'];
+                        $row_product_favourite_spnew['countSP'] = null;
+                        if (isset($_SESSION['id_user'])) {
+                          $sql_product_favourite_spnew = "SELECT COUNT(*) as countSP FROM favorite_products WHERE idProduct = $idProduct_spnew and idUser = $id_user";
+                          $query_product_favourite_spnew = mysqli_query($connect, $sql_product_favourite_spnew);
+                          $row_product_favourite_spnew = mysqli_fetch_array($query_product_favourite_spnew);
+                        }
+                        if ($row_product_favourite_spnew['countSP'] > 0 && $row_product_favourite_spnew['countSP'] != null) {
+                        ?>
+                          <i class="home-product-item__like-icon-empty far fa-heart"></i>
+                          <a href="<?php echo isset($_SESSION['id_user']) ? 'pages/main/xoasanphamyeuthich.php?id=' . $row_dsspnew['idProduct'] : 'javascript:alert(\'Bạn cần đăng nhập để sử dụng chức năng này!\');' ?>">
+                            <i class="home-product-item__like-icon-fill fas fa-heart"></i>
+                          </a>
+                        <?php
+                        } else {
+                        ?>
+                          <i class="home-product-item__like-icon-empty far fa-heart"></i>
+                          <a href="<?php echo isset($_SESSION['id_user']) ? 'pages/main/sanphamyeuthich.php?id=' . $row_dsspnew['idProduct'] : 'javascript:alert(\'Bạn cần đăng nhập để sử dụng chức năng này!\');' ?>">
+                            <i class="fa-regular fa-heart"></i>
+                          </a>
+                        <?php
 
+                        } ?>
                       </span>
 
                       <?php
@@ -191,10 +211,30 @@ $query_dssphot = mysqli_query($connect, $sql_dssphot);
                     </div>
                     <div class="home-product-item__action">
                       <span class="home-product-item__like home-product-item__like--liked">
-                        <i class="home-product-item__like-icon-empty far fa-heart"></i>
-                        <!-- <i class="home-product-item__like-icon-fill fas fa-heart"></i> -->
-                        <a href="pages/main/sanphamyeuthich.php?id=<?php echo $row_dssphot['idProduct'];?>"><i class="home-product-item__like-icon-fill fas fa-heart"></i></a>
+                        <?php
+                        $idProduct_spnew = $row_dssphot['idProduct'];
+                        $row_product_favourite_spnew['countSP'] = null;
+                        if (isset($_SESSION['id_user'])) {
+                          $sql_product_favourite_spnew = "SELECT COUNT(*) as countSP FROM favorite_products WHERE idProduct = $idProduct_spnew and idUser = $id_user";
+                          $query_product_favourite_spnew = mysqli_query($connect, $sql_product_favourite_spnew);
+                          $row_product_favourite_spnew = mysqli_fetch_array($query_product_favourite_spnew);
+                        }
+                        if ($row_product_favourite_spnew['countSP'] > 0 && $row_product_favourite_spnew['countSP'] != null) {
+                        ?>
+                          <i class="home-product-item__like-icon-empty far fa-heart"></i>
+                          <a href="<?php echo isset($_SESSION['id_user']) ? 'pages/main/xoasanphamyeuthich.php?id=' . $row_dssphot['idProduct'] : 'javascript:alert(\'Bạn cần đăng nhập để sử dụng chức năng này!\');' ?>">
+                            <i class="home-product-item__like-icon-fill fas fa-heart"></i>
+                          </a>
+                        <?php
+                        } else {
+                        ?>
+                          <i class="home-product-item__like-icon-empty far fa-heart"></i>
+                          <a href="<?php echo isset($_SESSION['id_user']) ? 'pages/main/sanphamyeuthich.php?id=' . $row_dssphot['idProduct'] : 'javascript:alert(\'Bạn cần đăng nhập để sử dụng chức năng này!\');' ?>">
+                            <i class="fa-regular fa-heart"></i>
+                          </a>
+                        <?php
 
+                        } ?>
                       </span>
 
                       <?php
@@ -327,9 +367,30 @@ $query_dssphot = mysqli_query($connect, $sql_dssphot);
                       </div>
                       <div class="home-product-item__action">
                         <span class="home-product-item__like home-product-item__like--liked">
-                          <i class="home-product-item__like-icon-empty far fa-heart"></i>
-                          <!-- <i class="home-product-item__like-icon-fill fas fa-heart"></i> -->
-                          <a href="pages/main/sanphamyeuthich.php?id=<?php echo $row_dssp['idProduct'];?>"><i class="home-product-item__like-icon-fill fas fa-heart"></i></a>
+                          <?php
+                          $idProduct_spnew = $row_dssp['idProduct'];
+                          $row_product_favourite_spnew['countSP'] = null;
+                          if (isset($_SESSION['id_user'])) {
+                            $sql_product_favourite_spnew = "SELECT COUNT(*) as countSP FROM favorite_products WHERE idProduct = $idProduct_spnew and idUser = $id_user";
+                            $query_product_favourite_spnew = mysqli_query($connect, $sql_product_favourite_spnew);
+                            $row_product_favourite_spnew = mysqli_fetch_array($query_product_favourite_spnew);
+                          }
+                          if ($row_product_favourite_spnew['countSP'] > 0 && $row_product_favourite_spnew['countSP'] != null) {
+                          ?>
+                            <i class="home-product-item__like-icon-empty far fa-heart"></i>
+                            <a href="<?php echo isset($_SESSION['id_user']) ? 'pages/main/xoasanphamyeuthich.php?id=' . $row_dssp['idProduct'] : 'javascript:alert(\'Bạn cần đăng nhập để sử dụng chức năng này!\');' ?>">
+                              <i class="home-product-item__like-icon-fill fas fa-heart"></i>
+                            </a>
+                          <?php
+                          } else {
+                          ?>
+                            <i class="home-product-item__like-icon-empty far fa-heart"></i>
+                            <a href="<?php echo isset($_SESSION['id_user']) ? 'pages/main/sanphamyeuthich.php?id=' . $row_dssp['idProduct'] : 'javascript:alert(\'Bạn cần đăng nhập để sử dụng chức năng này!\');' ?>">
+                              <i class="fa-regular fa-heart"></i>
+                            </a>
+                          <?php
+
+                          } ?>
                         </span>
 
                         <?php

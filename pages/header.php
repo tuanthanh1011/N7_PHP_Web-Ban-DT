@@ -67,17 +67,17 @@ if (isset($_POST['search-btn'])) {
     $search = $_POST['search'];
 }
 
-$sql_get_count = "SELECT COUNT(*) AS record_count FROM favorite_products";
-$query_get_count = mysqli_query($connect, $sql_get_count);
-
-// Số lượng bản ghi product 
-$count = mysqli_fetch_assoc($query_get_count);
-
-$count1['record_count'] = 0;
 
 if (isset($_SESSION['id_user'])) {
     $id_user = $_SESSION['id_user'];
     if ($id_user) {
+        $sql_get_count = "SELECT COUNT(*) AS record_count FROM favorite_products where idUser = $id_user ";
+        $query_get_count = mysqli_query($connect, $sql_get_count);
+
+        // Số lượng bản ghi product 
+        $count = mysqli_fetch_assoc($query_get_count);
+
+        $count1['record_count'] = 0;
         $sql_get_idCart = "SELECT idCart FROM cart WHERE idUser = $id_user and statusCart = 0";
         $query_get_idCart = mysqli_query($connect, $sql_get_idCart);
 
@@ -147,11 +147,11 @@ if (isset($_SESSION['id_user'])) {
                     <div class="mobile_cart visible-sm visible-xs">
                         <a href="index.php?quanly=cart" class="header__second__cart--icon">
                             <i class="fas fa-shopping-cart"></i>
-                            <span id="header__second__cart--notice" class="header__second__cart--notice"><?php echo $count1 ?></span>
+                            <span id="header__second__cart--notice" class="header__second__cart--notice"><?php echo $count1 || 0 ?></span>
                         </a>
                         <a href="index.php?quanly=listlike" class="header__second__like--icon">
                             <i class="far fa-heart"></i>
-                            <span id="header__second__like-- notice" class="header__second__like--notice"><?php echo $count ?></span>
+                            <span id="header__second__like-- notice" class="header__second__like--notice"><?php echo $count || 0 ?></span>
                         </a>
                     </div>
                 </div>
@@ -165,13 +165,13 @@ if (isset($_SESSION['id_user'])) {
                     <div class="item-car clearfix">
                         <a href="index.php?quanly=cart" class="header__second__cart--icon">
                             <i class="fas fa-shopping-cart"></i>
-                            <span id="header__second__cart--notice" class="header__second__cart--notice"><?php echo $count1['record_count'] ?></span>
+                            <span id="header__second__cart--notice" class="header__second__cart--notice"><?php echo isset($count1['record_count']) ? $count1['record_count'] : 0 ?></span>
                         </a>
                     </div>
                     <div class="item-like clearfix">
                         <a href="index.php?quanly=listlike&page=1" class="header__second__like--icon">
                             <i class="far fa-heart"></i>
-                            <span id="header__second__like--notice" class="header__second__like--notice"><?php echo $count['record_count'] ?></span>
+                            <span id="header__second__like--notice" class="header__second__like--notice"><?php echo isset($count['record_count']) ? $count['record_count'] : 0 ?></span>
                         </a>
                     </div>
                 </div>
