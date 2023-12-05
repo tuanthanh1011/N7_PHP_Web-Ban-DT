@@ -140,35 +140,34 @@ if (isset($_POST['thanhToan'])) {
                                         </a>
                                     </div>
                                 </div>
-                            </form>
-
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-12 hidden-sm hidden-xs" style="background-color:#f3f3f3;">
-                        <div class="sliderbar">
-                            <div class="sliderbar-header">
-                                <h2>Thông tin đơn hàng</h2>
                             </div>
-                            <div class="slider-footer">
-                                <div class="subtotal">
-                                    <?php
-                                    $sql_cart_detail = "SELECT SUM(quantity * sellingPrice) FROM cart_detail inner join products on cart_detail.idProduct = products.idProduct WHERE idCart = 1";
-                                    $query = mysqli_query($connect, $sql_cart_detail);
-                                    $tongTien = mysqli_fetch_array($query);
-                                    ?>
-                                    <div class="row row-sliderbar-footer">
-                                        <div class="col-6"><span>Tạm tính:</span></div>
-                                        <div class="col-6 text-right"><span><?php echo number_format($total_cart['total']) ?> VNĐ</span></div>
-                                    </div>
-                                    <div class="row row-sliderbar-footer">
-                                        <div class="col-6"><span>Phí vận chuyển</span></div>
-                                        <div class="col-6 text-right"><span>0₫</span></div>
-                                    </div>
+                        </div>
+                        <div class="col-lg-6 col-12 hidden-sm hidden-xs" style="background-color:#f3f3f3;">
+                            <div class="sliderbar">
+                                <div class="sliderbar-header">
+                                    <h2>Thông tin đơn hàng</h2>
                                 </div>
-                                <div class="total">
-                                    <div class="row row-sliderbar-footer">
-                                        <div class="col-6"><span>Tổng cộng:</span></div>
-                                        <div class="col-6 text-right"><span><?php echo number_format($total_cart['total']) ?> VNĐ</span></div>
+                                <div class="slider-footer">
+                                    <div class="subtotal">
+                                        <?php
+                                        $sql_cart_detail = "SELECT SUM(quantity * sellingPrice) FROM cart_detail inner join products on cart_detail.idProduct = products.idProduct WHERE idCart = 1";
+                                        $query = mysqli_query($connect, $sql_cart_detail);
+                                        $tongTien = mysqli_fetch_array($query);
+                                        ?>
+                                        <div class="row row-sliderbar-footer">
+                                            <div class="col-6"><span>Tạm tính:</span></div>
+                                            <div class="col-6 text-right"><span>625,000₫</span></div>
+                                        </div>
+                                        <div class="row row-sliderbar-footer">
+                                            <div class="col-6"><span>Phí vận chuyển</span></div>
+                                            <div class="col-6 text-right"><span>0₫</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="total">
+                                        <div class="row row-sliderbar-footer">
+                                            <div class="col-6"><span>Tổng cộng:</span></div>
+                                            <div class="col-6 text-right"><span>625,000₫</span></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
