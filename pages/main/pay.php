@@ -62,6 +62,20 @@ $row_user = mysqli_fetch_array($query_get_user);
 if (isset($_POST['thanhToan'])) {
     $sql_pay = "UPDATE cart SET payments = 'Thanh toán khi nhận hàng.', statusCart = 1 WHERE idUser = $id_user and statusCart = 0";
     $query_pay = mysqli_query($connect, $sql_pay);
+
+    $sql_get_cart_detail = "SELECT idProduct, quantity from cart_detail where idCart = $idCart";
+    $query_get_cart_detail = mysqli_query($connect, $sql_get_cart_detail);
+
+    while ($row_get_cart_detail = mysqli_fetch_array($query_get_cart_detail)) {
+        $idProduct1 = $row_get_cart_detail['idProduct'];
+        $quantity1 = $row_get_cart_detail['quantity'];
+
+        $sql_update_sellNum = "UPDATE products
+        SET sellNumber = (sellNumber + $quantity1) where idProduct = $idProduct1";
+
+        $query_update_sellNum = mysqli_query($connect, $sql_update_sellNum);
+    }
+
     echo "<script>
       alert('Đặt hàng thành công!')
       location.href = 'index.php'

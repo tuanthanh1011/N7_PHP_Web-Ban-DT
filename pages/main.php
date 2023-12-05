@@ -56,6 +56,9 @@
         if ($bientam == 'payMomoSuccess') {
             include("main/paymentSuccess.php");
         }
+        if ($bientam == 'orderDetail') {
+            include("main/orderDetail.php");
+        }
         if ($bientam == 'dangXuat') {
             unset($_SESSION['id_user']);
             echo "<script>location.href = 'index.php'</script>";

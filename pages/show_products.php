@@ -107,8 +107,8 @@ $query_dssphot = mysqli_query($connect, $sql_dssphot);
                       <?php echo $row_dsspnew['name'] ?>
                     </h5>
                     <div class="product__price">
-                      <p class="card-text price-color product__price-old"><?php echo $row_dsspnew['costPrice'] ?> đ</p>
-                      <p class="card-text price-color product__price-new"><?php echo $row_dsspnew['sellingPrice'] ?> đ</p>
+                      <p class="card-text price-color product__price-old"><?php echo number_format($row_dsspnew['costPrice']) ?> đ</p>
+                      <p class="card-text price-color product__price-new"><?php echo number_format($row_dsspnew['sellingPrice']) ?> đ</p>
                     </div>
                     <div class="home-product-item__action">
                       <span class="home-product-item__like home-product-item__like--liked">
@@ -121,7 +121,6 @@ $query_dssphot = mysqli_query($connect, $sql_dssphot);
                       $idProduct = $row_dsspnew['idProduct'];
                       $sql_rate = "SELECT AVG(feedbacks.Rate) AS average_rate
                       FROM feedbacks 
-                      INNER JOIN products ON feedbacks.idFeedBack = products.idProduct
                       WHERE feedbacks.idProduct = $idProduct
                       GROUP BY feedbacks.idProduct";
                       $query_rate = mysqli_query($connect, $sql_rate);
@@ -185,8 +184,8 @@ $query_dssphot = mysqli_query($connect, $sql_dssphot);
                       <?php echo $row_dssphot['name'] ?>
                     </h5>
                     <div class="product__price">
-                      <p class="card-text price-color product__price-old"><?php echo $row_dssphot['costPrice'] ?> đ</p>
-                      <p class="card-text price-color product__price-new"><?php echo $row_dssphot['sellingPrice'] ?> đ</p>
+                      <p class="card-text price-color product__price-old"><?php echo number_format($row_dssphot['costPrice']) ?> đ</p>
+                      <p class="card-text price-color product__price-new"><?php echo number_format($row_dssphot['sellingPrice']) ?> đ</p>
                     </div>
                     <div class="home-product-item__action">
                       <span class="home-product-item__like home-product-item__like--liked">
@@ -198,7 +197,6 @@ $query_dssphot = mysqli_query($connect, $sql_dssphot);
                       $idProduct = $row_dssphot['idProduct'];
                       $sql_rate = "SELECT AVG(feedbacks.Rate) AS average_rate
                       FROM feedbacks 
-                      INNER JOIN products ON feedbacks.idFeedBack = products.idProduct
                       WHERE feedbacks.idProduct = $idProduct
                       GROUP BY feedbacks.idProduct";
                       $query_rate = mysqli_query($connect, $sql_rate);
@@ -320,8 +318,8 @@ $query_dssphot = mysqli_query($connect, $sql_dssphot);
                         <?php echo $row_dssp['name'] ?>
                       </h5>
                       <div class="product__price">
-                        <p class="card-text price-color product__price-old"><?php echo $row_dssp['costPrice'] ?> đ</p>
-                        <p class="card-text price-color product__price-new"><?php echo $row_dssp['sellingPrice'] ?> đ</p>
+                        <p class="card-text price-color product__price-old"><?php echo number_format($row_dssp['costPrice']) ?> đ</p>
+                        <p class="card-text price-color product__price-new"><?php echo number_format($row_dssp['sellingPrice']) ?> đ</p>
                       </div>
                       <div class="home-product-item__action">
                         <span class="home-product-item__like home-product-item__like--liked">
@@ -333,7 +331,6 @@ $query_dssphot = mysqli_query($connect, $sql_dssphot);
                         $idProduct = $row_dssp['idProduct'];
                         $sql_rate = "SELECT AVG(feedbacks.Rate) AS average_rate
                         FROM feedbacks 
-                        INNER JOIN products ON feedbacks.idFeedBack = products.idProduct
                         WHERE feedbacks.idProduct = $idProduct
                         GROUP BY feedbacks.idProduct";
                         $query_rate = mysqli_query($connect, $sql_rate);

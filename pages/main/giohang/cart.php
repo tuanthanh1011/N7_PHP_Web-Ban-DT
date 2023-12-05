@@ -182,7 +182,7 @@
                         </div>
                       </div>
                       <div class="col-md-1 col-2 text-right">
-                        <a onclick="xoa(1)"><i class="fas fa-trash"></i></a>
+                        <a href="pages/main/giohang/xoagiohang.php?idP=<?php echo $row_listcart['idProduct'] ?>&idCart=<?php echo $idCart ?>"><i class="fas fa-trash"></i></a>
                       </div>
                     </div>
                   <?php

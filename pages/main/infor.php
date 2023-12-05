@@ -171,19 +171,17 @@ if (isset($_POST['sbChangePw'])) {
         </div>
         </form>
         <div class="detail__my-order item-detail">
-          <div class="heading-edit-password">
+          <div class="heading-edit-password mb-4">
             <h2>Đơn hàng của bạn</h2>
           </div>
           <div class="detail__my-order-content">
             <table class="table table-hover">
               <?php
-              $sql_get_cart_order = "SELECT * from cart inner join cart_detail on cart.idCart = cart_detail.idCart where idUser = $id_user";
+              $sql_get_cart_order = "SELECT * from cart where idUser = $id_user  and statusCart != 0";
               $query_get_cart_order = mysqli_query($connect, $sql_get_cart_order);
-              $row_get_cart_order = mysqli_fetch_array($query_get_cart_order);
               ?>
               <thead>
                 <tr>
-                  <th>MĐH</th>
                   <th>Ngày</th>
                   <th>Tổng tiền</th>
                   <th>Trạng thái</th>
@@ -191,33 +189,43 @@ if (isset($_POST['sbChangePw'])) {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>#1</td>
-                  <td>05-06-2021</td>
-                  <td>3.000.000 VNĐ</td>
-                  <td>
-                    <span class="btn-stt blue">Đang xác nhận</span>
-                  </td>
-                  <td><a href="" data-toggle="modal" data-target="#myModal">Xem</a></td>
-                </tr>
-                <tr>
-                  <td>#2</td>
-                  <td>05-06-2021</td>
-                  <td>3.000.000 VNĐ</td>
-                  <td>
-                    <span class="btn-stt green">Đã giao</span>
-                  </td>
-                  <td><a href="" data-toggle="modal" data-target="#myModal">Xem</a></td>
-                </tr>
-                <tr>
-                  <td>#3</td>
-                  <td>05-06-2021</td>
-                  <td>3.000.000 VNĐ</td>
-                  <td>
-                    <span class="btn-stt red">Đã hủy</span>
-                  </td>
-                  <td><a href="" data-toggle="modal" data-target="#myModal">Xem</a></td>
-                </tr>
+                <?php
+                while ($row_get_cart_order = mysqli_fetch_array($query_get_cart_order)) {
+                  $idCart = $row_get_cart_order['idCart'];
+                  $sql_total_cart = "SELECT SUM(sellingPrice * quantity) as total FROM cart_detail inner join products on cart_detail.idProduct = products.idProduct where idCart = $idCart";
+                  $query_total_cart = mysqli_query($connect, $sql_total_cart);
+                  $total_cart = mysqli_fetch_array($query_total_cart);
+                ?>
+                  <tr>
+                    <td><?php echo $row_get_cart_order['createdAt'] ?></td>
+                    <td><?php echo number_format($total_cart['total']) ?> VNĐ</td>
+
+                    <?php
+                    $status = $row_get_cart_order['statusCart'];
+                    $statusClass = '';
+                    $statusText = '';
+
+                    switch ($status) {
+                      case 1:
+                        $statusClass = 'green';
+                        $statusText = 'Đang giao';
+                        break;
+
+                      case 2:
+                        $statusClass = 'blue';
+                        $statusText = 'Giao thành công';
+                        break;
+                    }
+                    ?>
+                    <td>
+                      <span class="btn-stt <?php echo $statusClass; ?>"><?php echo $statusText; ?></span>
+                    </td>
+
+                    <td><a href="index.php?quanly=orderDetail&idCart=<?php echo $idCart ?>">Xem</a></td>
+                  </tr>
+                <?php
+                }
+                ?>
               </tbody>
             </table>
           </div>
@@ -225,8 +233,8 @@ if (isset($_POST['sbChangePw'])) {
       </div>
     </div>
   </div>
-
 </div>
+
 <script src="./assets/js/main.js"></script>
 <script>
   const pass_field = document.querySelector('#password');

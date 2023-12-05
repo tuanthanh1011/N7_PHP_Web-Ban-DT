@@ -79,9 +79,31 @@
 
     }
 
+    textarea {
+        font-size: 135%;
+    }
+
     /* mobile */
     @media (max-width: 739px) {}
 </style>
+
+<?php
+if (isset($_SESSION['id_user'])) {
+    $sql_get_user = "SELECT * FROM users WHERE idUser = $id_user";
+    $query_get_user = mysqli_query($connect, $sql_get_user);
+    $row_user = mysqli_fetch_array($query_get_user);
+
+    if (isset($_POST['sbContact'])) {
+        $title = $_POST['title'];
+        $noidung = $_POST['noidung'];
+        $id_user = $_SESSION['id_user'];
+
+        $sql_create_contact = "insert into contacts (topic, content, idUser) values ('$title', '$noidung', $id_user)";
+        $query_create_contact = mysqli_query($connect, $sql_create_contact);
+        echo "<script> alert('Gửi liên hệ thành công') </script>";
+    }
+}
+?>
 
 <body>
     <div class="overlay hidden"></div>
@@ -107,39 +129,58 @@
                 </div>
                 <div class="col-lg-8 col-12">
                     <div class="page-login">
-                        <h3 class="title-heading">Gửi thông tin</h3>
-                        <span class="text-contact">Bạn hãy điền nội dung tin nhắn vào form dưới đây
-                            và gửi cho chúng tôi. Chúng tôi sẽ trả lời bạn sau khi nhận được.
-                        </span>
-                        <form action="" method="POST" class="form" id="form-1">
-                            <div class="form-group">
-                                <label for="fullname" class="form-label">Tên đầy đủ</label>
-                                <input id="fullname" name="fullname" type="text" placeholder="VD: Lưu Tuấn Thành" class="form-control">
-                                <span class="form-message"></span>
+                        <div style="display: flex; justify-content: space-between">
+                            <h3 class="title-heading">Gửi thông tin</h3>
+                            <div>
+                                <i style="font-size: 16px;" class="fa fa-edit"></i>
+                                <a style="text-decoration: none; color: black" href="index.php?quanly=thongtin&by=pay">
+                                    Thay đổi
+                                </a>
                             </div>
-                            <div class="form-group">
-                                <label for="email" class="form-label">Email</label>
-                                <input id="email" name="email" type="text" placeholder="VD: email@domain.com" class="form-control">
-                                <span class="form-message"></span>
-                            </div>
-                            <div class="form-group">
-                                <label for="phone" class="form-label">Điện thoại</label>
-                                <input id="phone" pattern="[0-9]{10}" name="phone" type="tel" placeholder="0912*******" class="form-control">
-                                <span class="form-message"></span>
-                            </div>
-                            <div class="form-group">
-                                <label for="title" class="form-label">Tiêu đề</label>
-                                <input id="title" name="title" type="text" placeholder="VD: Hỗ trợ bảo hành" class="form-control">
-                                <span class="form-message"></span>
-                            </div>
-                            <label for="phone" class="form-label">Nội dung</label>
-                            <div class="form-group">
-                                <textarea name="noidung" id="noidung" cols="70" rows="10"></textarea>
-                                <span class="form-message"></span>
-                            </div>
+                        </div>
+                        <?php
+                        if (isset($_SESSION['id_user'])) {
+                        ?>
+                            <span class="text-contact">Bạn hãy điền nội dung tin nhắn vào form dưới đây
+                                và gửi cho chúng tôi. Chúng tôi sẽ trả lời bạn sau khi nhận được.
+                            </span>
+                            <form action="" method="POST" class="form" id="form-1">
+                                <div class="form-group">
+                                    <label for="fullname" class="form-label">Tên đầy đủ</label>
+                                    <input readonly value="<?php echo $row_user['fullName'] ?>" id="fullname" name="fullname" type="text" placeholder="VD: Lưu Tuấn Thành" class="form-control">
+                                    <span class="form-message"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input readonly value="<?php echo $row_user['email'] ?>" id="email" name="email" type="text" placeholder="VD: email@domain.com" class="form-control">
+                                    <span class="form-message"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone" class="form-label">Điện thoại</label>
+                                    <input readonly value="<?php echo $row_user['phone'] ?>" id="phone" pattern="[0-9]{10}" name="phone" type="tel" placeholder="0912*******" class="form-control">
+                                    <span class="form-message"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="title" class="form-label">Tiêu đề</label>
+                                    <input required id="title" name="title" type="text" placeholder="VD: Hỗ trợ bảo hành" class="form-control">
+                                    <span class="form-message"></span>
+                                </div>
+                                <label for="phone" class="form-label">Nội dung</label>
+                                <div class="form-group">
+                                    <textarea required name="noidung" id="noidung" cols="70" rows="10"></textarea>
+                                    <span class="form-message"></span>
+                                </div>
 
-                            <button class="form-submit btn-blocker" style="border-radius: unset;">Gửi tin nhắn<i class="fas fa-arrow-right" style="font-size: 16px;margin-left: 10px;"></i></button>
-                        </form>
+                                <button name="sbContact" class="form-submit btn-blocker" style="border-radius: unset;">Gửi tin nhắn<i class="fas fa-arrow-right" style="font-size: 16px;margin-left: 10px;"></i></button>
+                            </form>
+                        <?php
+                        } else {
+                        ?>
+                            <span class="text-contact">Vui lòng đăng nhập để sử dụng chức năng này!
+                            </span>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </div>
                 <div class="col-12">

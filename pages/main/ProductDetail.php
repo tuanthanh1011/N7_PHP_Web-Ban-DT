@@ -198,9 +198,20 @@
 </style>
 <?php
 $idProduct = $_GET['id'];
+if (isset($_SESSION['id_user'])) {
+  $id_user = $_SESSION['id_user'];
+}
 $sql_get_product = "SELECT * FROM products WHERE idProduct = $idProduct";
 $query_get_product = mysqli_query($connect, $sql_get_product);
 $product = mysqli_fetch_array($query_get_product);
+
+if (isset($_POST['submitFormFB'])) {
+  $rating = $_POST['rating'];
+  $content = $_POST['body_feedback'];
+
+  $sql_createFb = "insert into feedbacks (Rate, content, idProduct, idUser) values ($rating, '$content', $idProduct, $id_user)";
+  $query_createFb = mysqli_query($connect, $sql_createFb);
+}
 
 $quantityProduct = 1;
 ?>
@@ -234,13 +245,13 @@ $quantityProduct = 1;
 
           <div class="product__price" style="padding: 10px">
 
-            <h2 style="font-size: 30px"><?php echo $product['sellingPrice'] ?>đ</h2>
+            <h2 style="font-size: 30px"><?php echo number_format($product['sellingPrice']) ?>VNĐ</h2>
           </div>
 
 
           <div class="price-old" style="padding: 10px">
             Giá gốc:
-            <del><?php echo $product['costPrice'] ?></del>
+            <del><?php echo number_format($product['costPrice']) ?> VNĐ</del>
             <span class="discount"><?php echo round(100 - ($product['sellingPrice'] / $product['costPrice']) * 100) ?>%</span>
           </div>
 
@@ -321,12 +332,36 @@ $quantityProduct = 1;
   </div>
   <div class="product__comment">
     <div class="container">
-      <h2 class="product__describe-heading">Bình luận</h2>
-      <div class="row">
-        <div class="col-lg-4 col-12 mb-4">
-          <textarea name="" id="" cols="70" rows="10"></textarea>
-          <button type="submit" class="btn btn-comment">Gửi</button>
-        </div>
+      <h2 class="product__describe-heading mb-4">Bình luận</h2>
+      <div class="row" style="flex-wrap:nowrap">
+        <form action="" method="post">
+          <div class="col-12 mb-4">
+            <div class="d-flex mb-4">
+              <h4>Điểm đánh giá</h4>
+              <select name="rating" id="rate" style="height: 25px; font-size: 14px; width: 40px" class="ml-4 sbRate">
+                <option value="1" selected>1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            <textarea style="font-size: 12px;" name="body_feedback" id="" cols="70" rows="10"></textarea>
+            <?php
+            if (isset($id_user)) {
+            ?>
+              <button type="submit" name="submitFormFB" class="btn btn-comment">Gửi</button>
+            <?php
+            } else {
+            ?>
+              <div class="btn btn-comment" style="width: 250px; line-height: 20px">
+                <a style="font-size: 10px !important; color: white; text-decoration: none; padding: 8px 19px" href="index.php?quanly=dangNhap">Vui lòng đăng nhập để gửi đánh giá !</a>
+              </div>
+            <?php
+            }
+            ?>
+          </div>
+        </form>
 
         <?php
         $sql_rate = "SELECT * FROM feedbacks inner join users on users.idUser = feedbacks.idUser WHERE idProduct = $idProduct";
@@ -335,18 +370,18 @@ $quantityProduct = 1;
         <div class="col-lg-8 col-12">
 
 
-          <div class="body__comment" style="align-items: center">
-            <div class="comment" style="align-items: center; display: inline-block ">
+          <div class="body__comment" style="margin-top: 40px">
+            <div class="comment" style="align-items: center; display: inline-block; width: 100% ">
               <?php
               while ($row_listrate = mysqli_fetch_array($query_rate)) {
                 $rate = $row_listrate['Rate'];
               ?>
-                <div style="display: flex;margin-bottom: 15px">
+                <div style="display: flex;margin-bottom: 15px; width: 100%; border: 1px dashed; border-radius: 10px; padding: 10px">
                   <img class=" comment-img" src="https://th.bing.com/th/id/R.3f0121e1219e92931a593d9de465b0d3?rik=BOH%2bpiXst89hLg&pid=ImgRaw&r=0" alt="">
                   <div class="comment__content">
                     <div class="comment__content-heding">
-                      <h4 class="comment__content-name"><?php echo $row_listrate['fullName'] ?></h4>
-                      <span class="comment__content-time" style="padding-top: 2px"><?php echo $row_listrate['createdAt'] ?></span>
+                      <h4 class="comment__content-name" style="padding-top: 2px;"><?php echo $row_listrate['fullName'] ?></h4>
+                      <span class="comment__content-time" style="padding-top: 2px; font-size: 12px"><?php echo $row_listrate['createdAt'] ?></span>
                     </div>
                     <div class="home-product-item__rating" style="font-size: 14px;transform-origin: left;margin-bottom: 5px">
                       <!-- Đoạn này là để xem đáh giá bn sao và hiển thị số sao tương ứng -->
@@ -374,29 +409,6 @@ $quantityProduct = 1;
       </div>
     </div>
   </div>
-  <!-- end product detail -->
-
-  <div id="alert-cart" class="alert" style="display:none">
-    <div class="alert__heading">
-      <h4>Thêm vào giỏ hàng</h4>
-    </div>
-    <div class="alert__body">
-      <img src="./assets/img/product/addidas1.jpg" alt="" class="alert__body-img">
-      <div>
-        <h5 class="alert__body-name"></h5>
-
-        <span class="alert__body-amount">Số lượng: 1</span>
-        <h6 class="alert__body-price">2.000.000 VNĐ</h6>
-      </div>
-    </div>
-    <div class="alert__footer">
-      <a class="click__cart" style="border-radius: 4px">Xem giỏ hàng</a>
-    </div>
-  </div>
-  <div class="overlay1" style="display: none" onclick="fadeout()">
-
-  </div>
-
   <script src="./assets/js/main.js"></script>
   <script src="./assets/js/zoomsl.js"></script>
   <script>
@@ -438,6 +450,19 @@ $quantityProduct = 1;
       $('.overlay1').fadeOut();
       $('.alert').fadeOut();
     }
+
+    function handleSb() {
+      const selectBox = document.querySelector("#rate");
+      var selectedIndex = selectBox.selectedIndex;
+
+      console.log(selectBox.options[selectedIndex].value);
+
+    }
+
+    function handleSubmit() {
+
+    }
+
     setInterval(fadeOutModal, 7000);
   </script>
 

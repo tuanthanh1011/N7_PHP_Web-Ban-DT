@@ -73,8 +73,8 @@ $numberPage = round($count1 / $quantityOfAPage) < ($count1 / $quantityOfAPage) ?
                                     <?php echo $row_dssp['name'] ?>
                                 </h5>
                                 <div class="product__price">
-                                    <p class="card-text price-color product__price-old"><?php echo $row_dssp['costPrice'] ?> đ</p>
-                                    <p class="card-text price-color product__price-new"><?php echo $row_dssp['sellingPrice'] ?> đ</p>
+                                    <p class="card-text price-color product__price-old"><?php echo number_format($row_dssp['costPrice']) ?> đ</p>
+                                    <p class="card-text price-color product__price-new"><?php echo number_format($row_dssp['sellingPrice']) ?> đ</p>
                                 </div>
                                 <div class="home-product-item__action">
                                     <span class="home-product-item__like home-product-item__like--liked">

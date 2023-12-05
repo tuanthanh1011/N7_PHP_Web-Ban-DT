@@ -45,8 +45,8 @@ $rawHash = "accessKey=" . $accessKey . "&amount=" . $amount . "&extraData=" . $e
 $signature = hash_hmac("sha256", $rawHash, $secretKey);
 $data = array(
     'partnerCode' => $partnerCode,
-    'partnerName' => "Test",
-    "storeId" => "MomoTestStore",
+    'partnerName' => "SmartPoint Shop",
+    "storeId" => "SmartPoint Shop",
     'requestId' => $requestId,
     'amount' => $amount,
     'orderId' => $orderId,
@@ -61,5 +61,8 @@ $data = array(
 
 $result = execPostRequest($endpoint, json_encode($data));
 $jsonResult = json_decode($result, true);
-
-header('Location: ' . $jsonResult['payUrl']);
+if (isset($jsonResult['payUrl'])) {
+    header('Location: ' . $jsonResult['payUrl']);
+} else {
+    echo "Thông báo: " . $jsonResult['message'];
+}
