@@ -94,8 +94,62 @@ if (isset($_SESSION['id_user'])) {
     }
 }
 ?>
+<style>
+    .sliding-content {
+        overflow: hidden;
+        height: 40px;
+        /* Điều chỉnh chiều cao theo ý muốn */
+        position: relative;
+        border: 1px solid #ccc;
+        /* Để thấy rõ phần nội dung */
+    }
+
+    .content-wrapper {
+        display: flex;
+        overflow: hidden;
+        justify-content: center;
+    }
+
+    .content_slide {
+        flex: 1;
+        text-align: center;
+        margin: 0;
+        line-height: 40px;
+        opacity: 1;
+        animation: fadeInOut 8s infinite;
+        font-size: 14px;
+        font-weight: 700;
+        color: #E7BF5B;
+    }
+
+    @keyframes fadeInOut {
+
+        0% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-40px);
+        }
+
+        100% {
+            transform: translateY(-80px);
+        }
+
+    }
+</style>
 
 <header class="header">
+    <div class="sliding-content">
+        <div class="content-wrapper" style="background-color: #333F48;">
+            <div style="display: flex; flex-direction: column">
+                <div class="content_slide">ĐỔI TRẢ TRONG VÒNG 7 NGÀY VỚI TẤT CẢ CÁC SẢN PHẨM GẶP LỖI</div>
+                <div class="content_slide">MIỄN PHÍ VẬN CHUYỂN VỚI TẤT CẢ CÁC ĐƠN HÀNG</div>
+                <div class="content_slide">ĐỔI TRẢ TRONG VÒNG 7 NGÀY VỚI TẤT CẢ CÁC SẢN PHẨM GẶP LỖI</div>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <div class="top-link clearfix hidden-sm hidden-xs">
             <div class="row">
@@ -136,11 +190,11 @@ if (isset($_SESSION['id_user'])) {
         </div>
         <div class="header-main clearfix">
             <div class="row">
-                <div class="col-lg-3 col-100-h">
+                <div class="col-lg-3 col-100-h" style="flex: 0 0 15% !important;">
                     <div id="trigger-mobile" class="visible-sm visible-xs"><i class="fas fa-bars"></i></div>
                     <div class="logo">
-                        <a href="">
-                            <img width="150px" src="https://firebasestorage.googleapis.com/v0/b/n7-php.appspot.com/o/logo-shop-dien-thoai-7.png?alt=media&token=cfea5d67-44e4-42fe-b97b-bbea196a7c6e" alt="">
+                        <a href="index.php">
+                            <img width="150px" src="./img/logo-shop-dien-thoai-7.png" alt="">
                         </a>
                     </div>
 
@@ -155,13 +209,13 @@ if (isset($_SESSION['id_user'])) {
                         </a>
                     </div>
                 </div>
-                <div class="col-lg-6 m-auto pdt15">
-                    <form class="example" method="post" action="index.php?quanly=showAllProduct&search=<?php echo $search ?>&page=1">
-                        <input type="text" class="input-search" placeholder="Tìm kiếm.." value="<?php echo $search ?>" name="search">
+                <div class="col-lg-6 m-auto pdt15" style="flex: 0 0 65% !important; max-width: 65%">
+                    <form class="example" method="post" action="index.php?quanly=showAllProduct&page=1" id="searchForm">
+                        <input type="text" class="input-search" placeholder="Tìm kiếm.." value="<?php echo $search ?>" name="search" id="searchInput">
                         <button type="submit" value="btn" name="search-btn" class="search-btn"><i class="fa fa-search"></i></button>
                     </form>
                 </div>
-                <div class="col-3 m-auto hidden-sm hidden-xs">
+                <div class="col-3 m-auto hidden-sm hidden-xs" style="flex: 0 0 15% !important;">
                     <div class="item-car clearfix">
                         <a href="index.php?quanly=cart" class="header__second__cart--icon">
                             <i class="fas fa-shopping-cart"></i>
@@ -185,13 +239,24 @@ if (isset($_SESSION['id_user'])) {
                     <a href="index.php" class="<?php echo isset($_GET['quanly'])  == null ? 'active' : '' ?>">Trang chủ</a>
                 </li>
 
-                <li class="header_nav-list-item"><a href="index.php?quanly=gioithieu" class="<?php echo isset($_GET['quanly']) && $_GET['quanly'] == '' ? 'active' : '' ?>">Giới thiệu</a></li>
-                <li class="header_nav-list-item has-mega">
+                <li class="header_nav-list-item"><a href="index.php?quanly=gioithieu" class="<?php echo isset($_GET['quanly']) && $_GET['quanly'] == 'gioithieu' ? 'active' : '' ?>">Giới thiệu</a></li>
+                <li class="header_nav-list-item has-mega" style="padding: 2px 0;">
                     <a href="index.php?quanly=showAllProduct&page=1" class="<?php echo  isset($_GET['quanly']) && $_GET['quanly'] == 'showAllProduct' ? 'active' : '' ?>">Sản phẩm<i class="fas fa-angle-right" style="margin-left: 5px;"></i></a>
-                    <div class="mega-content" style="overflow-x: hidden; width: 70%; top: 32px ">
+                    <div class="mega-content" style="overflow-x: hidden; width: 70%; top: 32px; z-index: 1000 ">
                         <div class="row">
                             <ul class="col-8 no-padding level0">
 
+                                <ul class="level1" style="padding-top: 4px;">
+                                    <li class="level2">
+                                        <a href="index.php?quanly=nhomsp&list=NEW&page=1">
+                                            <p class="hmega">Sản phẩm mới</p>
+                                        </a>
+                                    </li>
+                                    <li class="level2">
+                                        <a href="index.php?quanly=nhomsp&list=HOT&page=1">
+                                            <p class="hmega">Sản phẩm bán chạy</p>
+                                        </a>
+                                </ul>
                                 <ul class="level1">
                                     <p class="hmega" href="./Product.html">Chọn theo hãng</p>
                                     <?php
@@ -210,16 +275,16 @@ if (isset($_SESSION['id_user'])) {
                                 <ul class="level1">
                                     <p class="hmega" href="./Product.html">Chọn theo mức giá</p>
                                     <li class="level2">
-                                        <a href="index.php?quanly=nhomsp&id=<?php ?>">Dưới 1 triệu </a>
+                                        <a href="index.php?quanly=nhomsp&Pmax=1000000&Pmin=0&page=1">Dưới 1 triệu </a>
                                     </li>
                                     <li class="level2">
-                                        <a href="index.php?quanly=nhomsp&id=<?php ?>">Từ 1 - 3 triệu </a>
+                                        <a href="index.php?quanly=nhomsp&Pmax=5000000&Pmin=1000000&page=1">Từ 1 - 5 triệu </a>
                                     </li>
                                     <li class="level2">
-                                        <a href="index.php?quanly=nhomsp&id=<?php ?>">Từ 3 - 5 triệu </a>
+                                        <a href="index.php?quanly=nhomsp&Pmax=10000000&Pmin=5000000&page=1">Từ 5 - 10 triệu </a>
                                     </li>
                                     <li class="level2">
-                                        <a href="index.php?quanly=nhomsp&id=<?php ?>">Từ 3 - 5 triệu </a>
+                                        <a href="index.php?quanly=nhomsp&Pmin=10000000&page=1">Trên 10 triệu </a>
                                     </li>
                                 </ul>
                 </li>
@@ -240,3 +305,25 @@ if (isset($_SESSION['id_user'])) {
         </div>
     </nav>
 </header>
+<script>
+    // Lấy đối tượng form và ô tìm kiếm
+    var searchForm = document.getElementById("searchForm");
+    var searchInput = document.getElementById("searchInput");
+
+    // Thêm sự kiện khi giá trị trong ô tìm kiếm thay đổi
+    searchInput.addEventListener("input", function() {
+        updateFormAction();
+    });
+
+    // Hàm cập nhật giá trị trong URL
+    function updateFormAction() {
+        var currentUrl = window.location.href;
+        var searchValue = searchInput.value;
+
+        // Cập nhật giá trị trong action của form
+        searchForm.action = "index.php?quanly=showAllProduct&search=" + encodeURIComponent(searchValue) + "&page=1";
+    }
+
+    // Gọi hàm cập nhật giá trị ban đầu
+    updateFormAction();
+</script>

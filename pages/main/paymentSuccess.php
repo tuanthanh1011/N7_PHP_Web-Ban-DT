@@ -17,10 +17,28 @@
 
 <?php
 session_start();
+
 include "../../admin/config/connect.php";
 $id_user = $_SESSION['id_user'];
+
+$sql_id_cart = "SELECT idCart FROM cart WHERE idUser = $id_user and statusCart = 0";
+$query_cart = mysqli_query($connect, $sql_id_cart);
+$idCart = mysqli_fetch_assoc($query_cart)['idCart'];
 $sql_pay = "UPDATE cart SET payments = 'Thanh toán qua Momo', statusCart = 1 WHERE idUser = $id_user and statusCart = 0";
 $query_pay = mysqli_query($connect, $sql_pay);
+
+$sql_get_cart_detail = "SELECT idProduct, quantity from cart_detail where idCart = $idCart";
+$query_get_cart_detail = mysqli_query($connect, $sql_get_cart_detail);
+
+while ($row_get_cart_detail = mysqli_fetch_array($query_get_cart_detail)) {
+    $idProduct1 = $row_get_cart_detail['idProduct'];
+    $quantity1 = $row_get_cart_detail['quantity'];
+
+    $sql_update_sellNum = "UPDATE products
+        SET sellNumber = (sellNumber + $quantity1) where idProduct = $idProduct1";
+
+    $query_update_sellNum = mysqli_query($connect, $sql_update_sellNum);
+}
 ?>
 
 <div class="container">

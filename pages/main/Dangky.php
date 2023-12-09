@@ -9,22 +9,30 @@ if (isset($_POST['dangky'])) {
   $address =  $_POST['address'];
   $password = md5($_POST['password']);
   $password_confirmation = md5($_POST['password_confirmation']);
-  if (!$fullName || !$email || !$phone || !$address || !$password || !$password_confirmation) {
-    $message_err = "Vui lòng nhập đầy đủ thông tin.";
-  } elseif ($password != $password_confirmation) {
-    $message_err = "Mật khẩu nhập lại không đúng";
-  } else {
 
-    $sql_dangky = "INSERT INTO users(fullName,email,phone,address,password, isAdmin) VALUE('" . $fullName . "','" . $email . "','" . $phone . "','" . $address . "','" . $password . "', 0)";
-    $query_dangky = mysqli_query($connect, $sql_dangky);
-    if ($query_dangky) {
-      $message = "Đăng ký thành công. Tự động chuyển sang trang đăng nhập sau 3s...";
-      echo
-      "<script>
-      setTimeout(() => {
-        location.href = 'index.php?quanly=dangNhap'
-      }, 3000)
-      </script>";
+  $sql_user = "SELECT * FROM users WHERE email = '$email'";
+  $query_user = mysqli_query($connect, $sql_user);
+  $count_user = mysqli_num_rows($query_user);
+  if ($count_user != 0) {
+    $message_err = "Tài khoản đã tồn tại";
+  } else {
+    if (!$fullName || !$email || !$phone || !$address || !$password || !$password_confirmation) {
+      $message_err = "Vui lòng nhập đầy đủ thông tin.";
+    } elseif ($password != $password_confirmation) {
+      $message_err = "Mật khẩu nhập lại không đúng";
+    } else {
+
+      $sql_dangky = "INSERT INTO users(fullName,email,phone,address,password, isAdmin) VALUE('" . $fullName . "','" . $email . "','" . $phone . "','" . $address . "','" . $password . "', 0)";
+      $query_dangky = mysqli_query($connect, $sql_dangky);
+      if ($query_dangky) {
+        $message = "Đăng ký thành công. Tự động chuyển sang trang đăng nhập sau 3s...";
+        echo
+        "<script>
+        setTimeout(() => {
+          location.href = 'index.php?quanly=dangNhap'
+        }, 3000)
+        </script>";
+      }
     }
   }
 }

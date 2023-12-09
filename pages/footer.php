@@ -15,7 +15,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 col-md-6 col-lg-3">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/n7-php.appspot.com/o/logo-shop-dien-thoai-7.png?alt=media&token=cfea5d67-44e4-42fe-b97b-bbea196a7c6e" alt="" width="100px" height="100px" style="border-radius: 50%;border: 3px solid #000;margin-bottom: 20px;">
+                    <img src="./img/logo-shop-dien-thoai-7.png" alt="" width="100px" height="100px" style="border-radius: 50%;border: 3px solid #000;margin-bottom: 20px;">
                     <ul class="footer__list">
                         <li class="footer__item">
                             <p><i class="fas fa-search-location footer__item-icon"></i> Hà Nội, Việt Nam</p>
@@ -78,18 +78,18 @@
                     </div>
                     <ul class="footer__list collapse show" id="demo">
                         <li class="footer__item">
-                            <a href="#" class="footer__item--link">Trang chủ</a>
+                            <a href="index.php" class="footer__item--link">Trang chủ</a>
                         <li class="footer__item">
-                            <a href="./intro.html" class="footer__item--link">Giới thiệu</a>
+                            <a href="index.php?quanly=gioithieu" class="footer__item--link">Giới thiệu</a>
                         </li>
                         <li class="footer__item">
-                            <a href="./Product.html" class="footer__item--link">Sản phẩm</a>
+                            <a href="index.php?quanly=showAllProduct&page=1" class="footer__item--link">Sản phẩm</a>
                         </li>
                         <li class="footer__item">
-                            <a href="./news.html" class="footer__item--link">Tin tức</a>
+                            <a href="index.php?quanly=news" class="footer__item--link">Tin tức</a>
                         </li>
                         <li class="footer__item">
-                            <a href="./contact.html" class="footer__item--link">Liên hệ</a>
+                            <a href="index.php?quanly=contact" class="footer__item--link">Liên hệ</a>
                         </li>
                     </ul>
                 </div>

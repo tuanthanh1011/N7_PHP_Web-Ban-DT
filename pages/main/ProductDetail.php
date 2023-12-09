@@ -85,12 +85,13 @@
 
     #main-img {
       max-width: unset;
+      position: static !important;
     }
 
     #main-img img {
+      position: absolute;
       width: 100%;
-      margin-left: 0;
-      margin-top: 0;
+      margin: 0 !important;
       background-size: cover;
       background-position: center;
       margin-bottom: 10px;
@@ -138,7 +139,7 @@
     }
 
     #main-img img {
-      width: 100%;
+      width: 80%;
       margin-left: 0;
       margin-top: 0;
       background-size: cover;
@@ -221,14 +222,11 @@ $quantityProduct = 1;
 
   <!-- product detail -->
   <div class="container">
-    <div class="product__detail">
+    <div class=" product__detail">
       <div class="row product__detail-row">
-        <div class="col-lg-6 col-12 daonguoc">
-          <div class="img-product">
-          </div>
-
-          <div id="main-img" style="cursor: pointer;">
-            <img src="<?php echo $product['image'] ?>" class="big-img" alt="ảnh chính" id="img-main">
+        <div class="col-lg-6 col-12 daonguoc" style="border: 1px solid #ccc; border-radius: 15px; position: relative">
+          <div id="main-img" style="cursor: pointer; position: static">
+            <img style="width: 80%; margin: 0; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 0" src="./img/product/<?php echo $product['image'] ?>" class="big-img" alt="ảnh chính" id="img-main">
             <div class="sale-off sale-off-2">
               <span class="sale-off-percent"><?php echo round(100 - ($product['sellingPrice'] / $product['costPrice']) * 100) ?>
                 %</span>
@@ -236,45 +234,14 @@ $quantityProduct = 1;
             </div>
           </div>
         </div>
-        <div class="col-lg-6 col-12" style="padding: 10px">
+        <div class="col-lg-6 col-12" style="padding: 20px">
 
-          <div class="product__name" style="padding: 10px; font-size: 40px">
-            <b><?php echo $product['name'] ?></b>
-          </div>
-
-
-          <div class="product__price" style="padding: 10px">
-
-            <h2 style="font-size: 30px"><?php echo number_format($product['sellingPrice']) ?>VNĐ</h2>
-          </div>
-
-
-          <div class="price-old" style="padding: 10px">
-            Giá gốc:
-            <del><?php echo number_format($product['costPrice']) ?> VNĐ</del>
-            <span class="discount"><?php echo round(100 - ($product['sellingPrice'] / $product['costPrice']) * 100) ?>%</span>
-          </div>
-
-          <div class="product__RAM" style="padding: 10px">
-            <h2>RAM: <?php echo $product['RAM'] ?></h2>
-          </div>
-          <div class="product__ROM" style="padding: 10px">
-            <h2>Dung lượng lưu trữ: <?php echo $product['ROM'] ?></h2>
-          </div>
-          <form class="myForm" action="" method="POST">
-            <div class="product__wrap">
-              <div class="product__amount">
-                <label for="">Số lượng: </label>
-                <input type="button" value="-" class="control" onclick="tru()">
-                <input type="text" class="qtt text-input" name="qtt" value="<?php echo $quantityProduct ?>">
-                <input type="button" value="+" class="control" onclick="cong()">
-              </div>
-              <button type="submit" class="add-cart" onclick="fadeInModal()">Thêm vào giỏ</button>
+          <div style="display:flex; justify-content: space-between">
+            <div class="product__name" style="padding: 10px; font-size: 40px">
+              <b><?php echo $product['name'] ?></b>
             </div>
-          </form>
-          <div class="product__shopnow">
-            <button class="shopnow">Mua ngay</button>
-            <span class="home-product-item__like home-product-item__like--liked">
+
+            <span style="line-height: 80px; padding-right: 20px" class="home-product-item__like home-product-item__like--liked">
               <?php
               $idProduct_spnew = $product['idProduct'];
               $row_product_favourite_spnew['countSP'] = null;
@@ -285,75 +252,107 @@ $quantityProduct = 1;
               }
               if ($row_product_favourite_spnew['countSP'] > 0 && $row_product_favourite_spnew['countSP'] != null) {
               ?>
-                <i class="home-product-item__like-icon-empty far fa-heart"></i>
                 <a href="<?php echo isset($_SESSION['id_user']) ? 'pages/main/xoasanphamyeuthich.php?id=' . $product['idProduct'] : 'javascript:alert(\'Bạn cần đăng nhập để sử dụng chức năng này!\');' ?>">
-                  <i class="home-product-item__like-icon-fill fas fa-heart"></i>
+                  <i style="font-size: 30px;" class="home-product-item__like-icon-fill fas fa-heart"></i>
                 </a>
               <?php
               } else {
               ?>
                 <i class="home-product-item__like-icon-empty far fa-heart"></i>
                 <a href="<?php echo isset($_SESSION['id_user']) ? 'pages/main/sanphamyeuthich.php?id=' . $product['idProduct'] : 'javascript:alert(\'Bạn cần đăng nhập để sử dụng chức năng này!\');' ?>">
-                  <i class="fa-regular fa-heart"></i>
+                  <i style="font-size: 30px;" class="fa-regular fa-heart"></i>
                 </a>
               <?php
 
               } ?>
             </span>
           </div>
+
+          <?php
+          // Xử lý việc tính sao trung bình của mỗi sp và hiển thị ra màn hình
+          $idProduct = $product['idProduct'];
+          $sql_rate = "SELECT AVG(feedbacks.Rate) AS average_rate
+                      FROM feedbacks 
+                      WHERE feedbacks.idProduct = $idProduct
+                      GROUP BY feedbacks.idProduct";
+          $query_rate = mysqli_query($connect, $sql_rate);
+          $row_average_rate = mysqli_fetch_array($query_rate);
+          if ($row_average_rate)
+            $rate_avg = round($row_average_rate['average_rate']);
+          else $rate_avg = 0;
+          ?>
+          <div class="home-product-item__rating" style="font-size: 24px; margin-left: -140px; padding-bottom: 12px">
+
+            <?php
+            for ($i = 0; $i < 5; $i++) {
+              $starClass = ($i < $rate_avg) ? "home-product-item__star--gold" : "";
+            ?>
+              <i class="fas fa-star <?= $starClass ?>"></i>
+            <?php
+            }
+            ?>
+          </div>
+          <!-- Kết thúc mã xử lý -->
+          <div class="product__price" style="padding: 10px">
+
+            <h2 style="font-size: 30px"><?php echo number_format($product['sellingPrice']) ?> VNĐ</h2>
+          </div>
+
+
+          <div class="price-old" style="padding: 10px">
+            Giá gốc:
+            <del><?php echo number_format($product['costPrice']) ?> VNĐ</del>
+            <span class="discount"><?php echo round(100 - ($product['sellingPrice'] / $product['costPrice']) * 100) ?>%</span>
+          </div>
+          <form class="myForm" action="" method="POST">
+            <div class="product__wrap">
+              <div class="product__amount">
+                <label for="">Số lượng: </label>
+                <input type="button" value="-" class="control" onclick="tru()">
+                <input readonly type="text" class="qtt text-input" name="qtt" value="<?php echo $quantityProduct ?>">
+                <input type="button" value="+" class="control" onclick="cong()">
+              </div>
+              <br />
+              <button type="submit" class="add-cart" onclick="fadeInModal()">Thêm vào giỏ</button>
+            </div>
+          </form>
+          <div style="font-size: 14px; opacity: 0.4;">Số lượng còn trong kho:
+            <span class="qttStock"><?php echo $product['qttStock'] ?></span>
+          </div>
+          <hr>
+          <div class="product__describe">
+
+            <div class="container" style="padding: 0 !important">
+              <div class="col-11" style="padding: 0 !important">
+                <div class="product_specifications" style="font-size: 16px">
+                  <h3 style="padding: 8px 0;" class="name__product">Thông số kĩ thuật</h3>
+                  <div class="product__screen">
+                    <p>Màn hình: <?php echo $product['screen'] ?></p>
+                  </div>
+                  <div class="product__camera">
+                    <p>Camera: <?php echo $product['camera'] ?></p>
+                  </div>
+                  <div class="product__CPU">
+                    <p>CPU: <?php echo $product['CPU'] ?></p>
+                  </div>
+                  <div class="product__RAM">
+                    <p>RAM: <?php echo $product['RAM'] ?></p>
+                  </div>
+                  <div class="product__ROM">
+                    <p>Dung lượng lưu trữ: <?php echo $product['ROM'] ?></p>
+                  </div>
+                  <div class="product__battery">
+                    <p>Dung lượng pin: <?php echo $product['battery'] ?></p>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="product__describe">
-
-    <div class="container">
-      <h2 class="product__describe-heading">Mô tả</h2>
-
-
-      <div class="col-1"></div>
-      <div class="col-11">
-        <div class="product_specifications" style="font-size: 16px">
-          <h3 class="name__product">Thông số kĩ thuật</h3>
-          <div class="product__screen">
-            <p>Màn hình: <?php echo $product['screen'] ?></p>
-          </div>
-          <div class="product__camera">
-            <p>Camera: <?php echo $product['camera'] ?></p>
-          </div>
-          <div class="product__CPU">
-            <p>CPU: <?php echo $product['CPU'] ?></p>
-          </div>
-          <div class="product__RAM">
-            <p>RAM: <?php echo $product['RAM'] ?></p>
-          </div>
-          <div class="product__ROM">
-            <p>Dung lượng lưu trữ: <?php echo $product['ROM'] ?></p>
-          </div>
-          <div class="product__battery">
-            <p>Dung lượng pin: <?php echo $product['battery'] ?> mAh</p>
-          </div>
-
-        </div>
-        <!-- <h3 class="name__product" style="margin: 12px 0">Bảo hành chính hãng</h3>
-        <h3 style="margin: 8px 0">Chính sách đổi trả: </h3>
-        <p>Bảo hành có cam kết trong 12 tháng (chỉ áp dụng cho sản phẩm chính, KHÔNG áp dụng cho phụ kiện
-          kèm theo)</p>
-
-        <p>Bảo hành trong vòng 15 ngày (từ lúc Khách hàng mang sản phẩm đến bảo hành đến lúc nhận lại sản
-          phẩm tối đa 15 ngày).</p>
-        <p>Sản phẩm không bảo hành lại lần 2 trong 30 ngày kể từ ngày máy được bảo hành xong.</p>
-        <p>Nếu TGDD/ĐMX vi phạm cam kết (bảo hành quá 15 ngày hoặc phải bảo hành lại sản phẩm lần nữa trong
-          30 ngày kể từ lần bảo hành trước), Khách hàng được áp dụng phương thức Hư gì đổi nấy ngay và
-          luôn hoặc Hoàn tiền với mức phí giảm 50%.</p>
-        <p>Từ tháng thứ 13 trở đi, không áp dụng bảo hành có cam kết, chỉ áp dụng bảo hành hãng nếu có.</p> -->
-
-      </div>
-    </div>
-  </div>
-  </div>
-  <div class="product__comment">
-    <div class="container">
+    <div class="product__comment">
       <h2 class="product__describe-heading mb-4">Bình luận</h2>
       <div class="row" style="flex-wrap:nowrap">
         <form action="" method="post">
@@ -392,7 +391,7 @@ $quantityProduct = 1;
         <div class="col-lg-8 col-12">
 
 
-          <div class="body__comment" style="margin-top: 40px">
+          <div class="body__comment" style="margin-top: 40px; width: 88%">
             <div class="comment" style="align-items: center; display: inline-block; width: 100% ">
               <?php
               while ($row_listrate = mysqli_fetch_array($query_rate)) {
@@ -430,6 +429,108 @@ $quantityProduct = 1;
         </div>
       </div>
     </div>
+
+    <!-- List sản phẩm hot -->
+    <div class="product__sale">
+      <h3 class="product__sale title-product">Sản phẩm đề xuất</h3>
+      <div class="row">
+        <?php
+
+        $sql_dssphot = "SELECT DISTINCT * FROM products WHERE tag = 'HOT' ORDER BY RAND() LIMIT 4";
+        $query_dssphot = mysqli_query($connect, $sql_dssphot);
+        while ($row_dssphot = mysqli_fetch_array($query_dssphot)) {
+        ?>
+          <div class="col-lg-3 col-md-6 col-sm-12 mb-20">
+            <a href="index.php?quanly=productDetail&id=<?php echo $row_dssphot['idProduct'] ?>" class="product__new-item">
+              <div class="card" style="width: 100%">
+                <div>
+                  <img class="card-img-top" src="./img/product/<?php echo $row_dssphot['image'] ?>" alt="Card image cap">
+                  <form action="" class="hover-icon hidden-sm hidden-xs">
+                    <input type="hidden">
+                    <a href="pages/main/giohang/themgiohang.php?idP=<?php echo $row_dssphot['idProduct'] ?>&qtt=1" class="btn-add-to-cart" title="Thêm vào giỏ hàng">
+                      <i class="fas fa-cart-plus"></i>
+                    </a>
+                    <a href="index.php?quanly=productDetail&id=<?php echo $row_dssphot['idProduct'] ?>" class="quickview" title="Xem nhanh">
+                      <i class="fas fa-search"></i>
+                    </a>
+                  </form>
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title custom__name-product">
+                    <?php echo $row_dssphot['name'] ?>
+                  </h5>
+                  <div class="product__price">
+                    <p class="card-text price-color product__price-old"><?php echo number_format($row_dssphot['costPrice']) ?> đ</p>
+                    <p class="card-text price-color product__price-new"><?php echo number_format($row_dssphot['sellingPrice']) ?> đ</p>
+                  </div>
+                  <div class="home-product-item__action">
+                    <span class="home-product-item__like home-product-item__like--liked">
+                      <?php
+                      $idProduct_spnew = $row_dssphot['idProduct'];
+                      $row_product_favourite_spnew['countSP'] = null;
+                      if (isset($_SESSION['id_user'])) {
+                        $sql_product_favourite_spnew = "SELECT COUNT(*) as countSP FROM favorite_products WHERE idProduct = $idProduct_spnew and idUser = $id_user";
+                        $query_product_favourite_spnew = mysqli_query($connect, $sql_product_favourite_spnew);
+                        $row_product_favourite_spnew = mysqli_fetch_array($query_product_favourite_spnew);
+                      }
+                      if ($row_product_favourite_spnew['countSP'] > 0 && $row_product_favourite_spnew['countSP'] != null) {
+                      ?>
+                        <i class="home-product-item__like-icon-empty far fa-heart"></i>
+                        <a href="<?php echo isset($_SESSION['id_user']) ? 'pages/main/xoasanphamyeuthich.php?id=' . $row_dssphot['idProduct'] : 'javascript:alert(\'Bạn cần đăng nhập để sử dụng chức năng này!\');' ?>">
+                          <i class="home-product-item__like-icon-fill fas fa-heart"></i>
+                        </a>
+                      <?php
+                      } else {
+                      ?>
+                        <i class="home-product-item__like-icon-empty far fa-heart"></i>
+                        <a href="<?php echo isset($_SESSION['id_user']) ? 'pages/main/sanphamyeuthich.php?id=' . $row_dssphot['idProduct'] : 'javascript:alert(\'Bạn cần đăng nhập để sử dụng chức năng này!\');' ?>">
+                          <i class="fa-regular fa-heart"></i>
+                        </a>
+                      <?php
+
+                      } ?>
+                    </span>
+
+                    <?php
+                    $idProduct = $row_dssphot['idProduct'];
+                    $sql_rate = "SELECT AVG(feedbacks.Rate) AS average_rate
+                      FROM feedbacks 
+                      WHERE feedbacks.idProduct = $idProduct
+                      GROUP BY feedbacks.idProduct";
+                    $query_rate = mysqli_query($connect, $sql_rate);
+                    $row_average_rate = mysqli_fetch_array($query_rate);
+                    if ($row_average_rate)
+                      $rate_avg = round($row_average_rate['average_rate']);
+                    else $rate_avg = 0;
+                    ?>
+                    <div class="home-product-item__rating">
+
+                      <?php
+                      for ($i = 0; $i < 5; $i++) {
+                        $starClass = ($i < $rate_avg) ? "home-product-item__star--gold" : "";
+                      ?>
+                        <i class="fas fa-star <?= $starClass ?>"></i>
+                      <?php
+                      }
+                      ?>
+
+                    </div>
+                    <span class="home-product-item__sold"><?php echo $row_dssphot['sellNumber'] ?> đã bán</span>
+                  </div>
+                  <div class="sale-off">
+                    <span class="sale-off-percent"><?php echo round(100 - ($row_dssphot['sellingPrice'] / $row_dssphot['costPrice']) * 100) ?> %</span>
+                    <span class="sale-off-label">GIẢM</span>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+
+        <?php
+        }
+        ?>
+      </div>
+    </div>
   </div>
   <script src="./assets/js/main.js"></script>
   <script src="./assets/js/zoomsl.js"></script>
@@ -444,6 +545,7 @@ $quantityProduct = 1;
   <script>
     const qttProduct = document.querySelector(".qtt");
     const myForm = document.querySelector(".myForm");
+    const qttStock = document.querySelector(".qttStock");
     myForm.action = "pages/main/giohang/themgiohang.php?idP=<?php echo $product['idProduct'] ?>&qtt=" + qttProduct.value;
 
     function tru() {
@@ -454,8 +556,12 @@ $quantityProduct = 1;
     }
 
     function cong() {
-      qttProduct.value = parseInt(qttProduct.value) + 1;
-      myForm.action = "pages/main/giohang/themgiohang.php?idP=<?php echo $product['idProduct'] ?>&qtt=" + qttProduct.value;
+      if (qttProduct.value < parseInt(qttStock.textContent)) {
+        qttProduct.value = parseInt(qttProduct.value) + 1;
+        myForm.action = "pages/main/giohang/themgiohang.php?idP=<?php echo $product['idProduct'] ?>&qtt=" + qttProduct.value;
+      } else {
+        alert("Vượt quá số lượng trong kho!")
+      }
     }
 
     function fadeInModal() {

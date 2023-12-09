@@ -8,22 +8,27 @@
     background-color: #ccc;
     border-radius: 50%;
   }
+
+  .maincontent {
+    background-color: #F0F0F0 !important;
+    padding-bottom: 40px;
+  }
 </style>
 
 <?php
 $sql_dssp = "SELECT * FROM products LIMIT 8";
 $query_dssp = mysqli_query($connect, $sql_dssp);
 
-$sql_dsspnew = "SELECT DISTINCT * FROM products WHERE tag = 'NEW'";
+$sql_dsspnew = "SELECT DISTINCT * FROM products WHERE tag = 'NEW' LIMIT 8";
 $query_dsspnew = mysqli_query($connect, $sql_dsspnew);
 
-$sql_dssphot = "SELECT DISTINCT * FROM products WHERE tag = 'HOT'";
+$sql_dssphot = "SELECT DISTINCT * FROM products WHERE tag = 'HOT' LIMIT 8";
 $query_dssphot = mysqli_query($connect, $sql_dssphot);
 ?>
 
-<div class="container">
+<div class="container" style="max-width: 1300px">
   <!-- slide show -->
-  <div class="row" style="display: block">
+  <div class="row" style="display: block; padding: 18px 0">
     <section class="awe-section-1">
       <div class="mt-4 top-sliders col-md-12">
         <div class="slideshow">
@@ -31,32 +36,20 @@ $query_dssphot = mysqli_query($connect, $sql_dssphot);
             <div class="carousel-inner">
               <div class="carousel-item active">
                 <div style="display: flex">
-                  <img style="padding: 2px; border-radius: 16px" src="https://firebasestorage.googleapis.com/v0/b/n7-php.appspot.com/o/imgSlide%2Fslide1.jpg?alt=media&token=5c4b22a0-88f6-43a5-9439-48f7f5c9cdc2" alt="Los Angeles" width="50%" height="500">
-                  <img style="padding: 2px; border-radius: 16px" src="https://firebasestorage.googleapis.com/v0/b/n7-php.appspot.com/o/imgSlide%2Fslide2.jpg?alt=media&token=94679ca0-6a19-482f-ab8c-d361f78883f3" alt="Los Angeles" width="50%" height="500">
+                  <img style="padding: 2px; border-radius: 16px" src="./img/slide/Cate-copy-2-(4)_25549280901122023.jpg" alt="Los Angeles" width="50%" height="500">
+                  <img style="padding: 2px; border-radius: 16px" src="./img/slide/cate-(3)_89112400801122023.png" alt="Los Angeles" width="50%" height="500">
                 </div>
               </div>
               <div class="carousel-item">
                 <div style="display: flex">
-                  <img style="padding: 2px; border-radius: 16px" src="https://firebasestorage.googleapis.com/v0/b/n7-php.appspot.com/o/imgSlide%2Fslide4.png?alt=media&token=eecf657b-8b98-4cb9-91a6-e883989f3fd7" alt="Los Angeles" width="50%" height="500">
-                  <img style="padding: 2px; border-radius: 16px" src="https://firebasestorage.googleapis.com/v0/b/n7-php.appspot.com/o/imgSlide%2Fslide1.jpg?alt=media&token=c3ae3088-4d42-4946-ac48-4c1323b53459" alt="Los Angeles" width="50%" height="500">
+                  <img style="padding: 2px; border-radius: 16px" src="./img/slide/Cate-(3)_90105342330112023.png" alt="Los Angeles" width="50%" height="500">
+                  <img style="padding: 2px; border-radius: 16px" src="./img/slide/CATE-(4)_71529380001122023.jpg" alt="Los Angeles" width="50%" height="500">
                 </div>
               </div>
               <div class="carousel-item">
                 <div style="display: flex">
-                  <img style="padding: 2px; border-radius: 16px" src="https://firebasestorage.googleapis.com/v0/b/n7-php.appspot.com/o/imgSlide%2Fslide5.jpg?alt=media&token=7475b105-b748-430e-aee5-b8fda49fa8d9" alt="Los Angeles" width="50%" height="500">
-                  <img style="padding: 2px; border-radius: 16px" src="https://firebasestorage.googleapis.com/v0/b/n7-php.appspot.com/o/imgSlide%2Fslide6.png?alt=media&token=28ff7f28-70db-4e15-853e-4dbb742d3133" alt="Los Angeles" width="50%" height="500">
-                </div>
-              </div>
-              <div class="carousel-item">
-                <div style="display: flex">
-                  <img style="padding: 2px; border-radius: 16px" src="https://firebasestorage.googleapis.com/v0/b/n7-php.appspot.com/o/imgSlide%2Fslide7.png?alt=media&token=76d02e8d-14b2-476b-b209-f9570fbb985e" alt="Los Angeles" width="50%" height="500">
-                  <img style="padding: 2px; border-radius: 16px" src="https://firebasestorage.googleapis.com/v0/b/n7-php.appspot.com/o/imgSlide%2Fslide8.jpg?alt=media&token=ce471d33-ed09-464e-aded-a7d9b9d18767" alt="Los Angeles" width="50%" height="500">
-                </div>
-              </div>
-              <div class="carousel-item">
-                <div style="display: flex">
-                  <img style="padding: 2px; border-radius: 16px" src="https://firebasestorage.googleapis.com/v0/b/n7-php.appspot.com/o/imgSlide%2Fslide9.jpg?alt=media&token=5ad58cc0-affe-466c-bff0-061d43e8c396" alt="Los Angeles" width="50%" height="500">
-                  <img style="padding: 2px; border-radius: 16px" src="https://firebasestorage.googleapis.com/v0/b/n7-php.appspot.com/o/imgSlide%2Fslide10.png?alt=media&token=e96b7b27-c3c4-4242-8706-493caffc7768" alt="Los Angeles" width="50%" height="500">
+                  <img style="padding: 2px; border-radius: 16px" src="./img/slide/Cate-(4)_94535392330112023.png" alt="Los Angeles" width="50%" height="500">
+                  <img style="padding: 2px; border-radius: 16px" src="./img/slide/Cate-(5)_9025270807122023.png" alt="Los Angeles" width="50%" height="500">
                 </div>
               </div>
 
@@ -77,7 +70,7 @@ $query_dssphot = mysqli_query($connect, $sql_dssphot);
     </section>
   </div>
   <!-- end slide show -->
-  <div class="product">
+  <div class="product" style="background-color: #fff; border-radius: 12px">
     <div class="container">
 
       <div class="product__new">
@@ -91,13 +84,13 @@ $query_dssphot = mysqli_query($connect, $sql_dssphot);
               <a href="index.php?quanly=productDetail&id=<?php echo $row_dsspnew['idProduct'] ?>" class="product__new-item">
                 <div class="card" style="width: 100%">
                   <div>
-                    <img class="card-img-top" src="<?php echo $row_dsspnew['image'] ?>" alt="Card image cap">
+                    <img class="card-img-top" src="./img/product/<?php echo $row_dsspnew['image'] ?>" alt="Card image cap">
                     <form action="" class="hover-icon hidden-sm hidden-xs">
                       <input type="hidden">
-                      <a href="index.php?quanly=productDetail&id=<?php echo $row_dsspnew['idProduct'] ?>" class="btn-add-to-cart" title="Thêm vào giỏ hàng">
+                      <a href="pages/main/giohang/themgiohang.php?idP=<?php echo $row_dsspnew['idProduct'] ?>&qtt=1" class="btn-add-to-cart" title="Thêm vào giỏ hàng">
                         <i class="fas fa-cart-plus"></i>
                       </a>
-                      <a data-toggle="modal" data-target="#myModal" class="quickview" title="Xem nhanh">
+                      <a href="index.php?quanly=productDetail&id=<?php echo $row_dsspnew['idProduct'] ?>" class="quickview" title="Xem nhanh">
                         <i class="fas fa-search"></i>
                       </a>
                     </form>
@@ -190,10 +183,10 @@ $query_dssphot = mysqli_query($connect, $sql_dssphot);
               <a href="index.php?quanly=productDetail&id=<?php echo $row_dssphot['idProduct'] ?>" class="product__new-item">
                 <div class="card" style="width: 100%">
                   <div>
-                    <img class="card-img-top" src="<?php echo $row_dssphot['image'] ?>" alt="Card image cap">
+                    <img class="card-img-top" src="./img/product/<?php echo $row_dssphot['image'] ?>" alt="Card image cap">
                     <form action="" class="hover-icon hidden-sm hidden-xs">
                       <input type="hidden">
-                      <a href="./pay.html" class="btn-add-to-cart" title="Mua ngay">
+                      <a href="pages/main/giohang/themgiohang.php?idP=<?php echo $row_dssphot['idProduct'] ?>&qtt=1" class="btn-add-to-cart" title="Thêm vào giỏ hàng">
                         <i class="fas fa-cart-plus"></i>
                       </a>
                       <a href="index.php?quanly=productDetail&id=<?php echo $row_dssphot['idProduct'] ?>" class="quickview" title="Xem nhanh">
@@ -282,7 +275,7 @@ $query_dssphot = mysqli_query($connect, $sql_dssphot);
           <div class="section_policy clearfix">
             <div class="col-12">
               <div class="owl-policy-mobile">
-                <div class="owl-stage-outer">
+                <div class="owl-stage-outer" style="padding-left: 70px;">
                   <div class="owl-stage">
                     <div class="owl-item">
                       <div class="section_policy_content">
@@ -342,17 +335,17 @@ $query_dssphot = mysqli_query($connect, $sql_dssphot);
             <?php
             while ($row_dssp = mysqli_fetch_array($query_dssp)) {
             ?>
-              <div class="col-lg-3 col-md-6 col-sm-12 mb-20">
+              <div class="col-lg-3 col-md-6 col-sm-12 mb-20" style="margin-bottom: 30px;">
                 <a href="index.php?quanly=productDetail&id=<?php echo $row_dssp['idProduct'] ?>" class="product__new-item">
                   <div class="card" style="width: 100%">
                     <div>
-                      <img class="card-img-top" src="<?php echo $row_dssp['image'] ?>" alt="Card image cap">
+                      <img class="card-img-top" src="./img/product/<?php echo $row_dssp['image'] ?>" alt="Card image cap">
                       <form action="" class="hover-icon hidden-sm hidden-xs">
                         <input type="hidden">
-                        <a href="index.php?quanly=productDetail&id=<?php echo $row_dssp['idProduct'] ?>" class="btn-add-to-cart" title="Thêm vào giỏ hàng">
+                        <a href="pages/main/giohang/themgiohang.php?idP=<?php echo $row_dssp['idProduct'] ?>&qtt=1" class="btn-add-to-cart" title="Thêm vào giỏ hàng">
                           <i class="fas fa-cart-plus"></i>
                         </a>
-                        <a data-toggle="modal" data-target="#myModal" class="quickview" title="Xem nhanh">
+                        <a href="index.php?quanly=productDetail&id=<?php echo $row_dssp['idProduct'] ?>" data-toggle="modal" data-target="#myModal" class="quickview" title="Xem nhanh">
                           <i class="fas fa-search"></i>
                         </a>
                       </form>
@@ -437,9 +430,9 @@ $query_dssphot = mysqli_query($connect, $sql_dssphot);
       </div>
     </div>
   </div>
-  <div class="shoesnews">
+  <div class="shoesnews" style="background-color: white; border-radius: 15px;">
     <div class="container">
-      <h3 class="shoesnews__title">Tin tức</h3>
+      <h3 class="shoesnews__title" style="padding: 24px;">Tin tức</h3>
       <?php
       $sql_show_news = "SELECT * FROM news LIMIT 3";
       $query_show_news = mysqli_query($connect, $sql_show_news);
@@ -451,7 +444,7 @@ $query_dssphot = mysqli_query($connect, $sql_dssphot);
           <div class="col-lg-4 col-md-4 col-sm-12 mb-20">
             <a href="index.php?quanly=news_detail&id=<?php echo $row['id'] ?>" class="product__new-item">
               <div class="card" style="width: 100%">
-                <img class="card-img-top" src="admin/news_management/uploads/<?php echo $row['image'] ?>" alt="Card image cap" height="230px">
+                <img class="card-img-top" src="./img/news/<?php echo $row['image'] ?>" alt="Card image cap" height="230px">
                 <div class="card-body">
                   <h5 class="card-title custom__name-product title-news">
                     <?php echo $row['title'] ?>

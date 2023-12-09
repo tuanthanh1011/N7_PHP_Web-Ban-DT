@@ -15,6 +15,10 @@ if (empty($admin)) {
     .transform {
         transform: rotate(-90deg);
     }
+
+    i {
+        padding-right: 8px;
+    }
 </style>
 
 <aside class="main-sidebar">
@@ -42,20 +46,13 @@ if (empty($admin)) {
         </form>
         <ul class="sidebar-menu" data-widget="tree">
             <li>
-                <a href="category.php">
-                    <i class="fa fa-th"></i> <span>Quản lý Danh mục </span>
-                    <span class="pull-right-container">
-                        <small class="label pull-right bg-green">FE</small>
-                    </span>
+                <a href="index.php?quanly=users">
+                    <i class="fa-solid fa-users"></i> <span>Quản lý người dùng</span>
                 </a>
             </li>
-
             <li class="treeview" onclick="handleOpenMenu()">
                 <a href="#">
-                    <i class="fa fa-dashboard"></i> <span>Quản lý sản phẩm</span>
-                    <span class="pull-right-container arrow-left">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
+                    <i class="fa-brands fa-product-hunt"></i> <span>Quản lý sản phẩm</span>
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="index.php?quanly=showAllProduct"><i class="fa fa-circle-o"></i> Danh sách sản phẩm</a></li>
@@ -63,25 +60,27 @@ if (empty($admin)) {
                 </ul>
             </li>
             <li>
-                <a href="order-m.php">
-                    <i class="fa fa-th"></i> <span>Quản lý Đơn hàng</span>
-                    <span class="pull-right-container">
-                        <small class="label pull-right bg-green">FE</small>
-                    </span>
+                <a href="index.php?quanly=warehouse">
+                    <i class="fa-solid fa-warehouse"></i> <span>Quản lý kho hàng</span>
                 </a>
             </li>
             <li>
-                <a href="">
-                    <i class="fa fa-th"></i> <span>Widgets</span>
-                    <span class="pull-right-container">
-                        <small class="label pull-right bg-green">Hot</small>
-                    </span>
+                <a href="index.php?quanly=orders">
+                    <i class="fa-solid fa-credit-card"></i> <span>Quản lý đơn hàng</span>
                 </a>
             </li>
-
+            <li>
+                <a href="index.php?quanly=news">
+                    <i class="fa-solid fa-envelopes-bulk"></i> <span>Quản lý bài viết</span>
+                </a>
+            </li>
+            <li>
+                <a href="index.php?quanly=contacts">
+                    <i class="fa-regular fa-envelope"></i> <span>Hỗ trợ khách hàng</span>
+                </a>
+            </li>
         </ul>
     </section>
-    <!-- /.sidebar -->
 </aside>
 
 <script>

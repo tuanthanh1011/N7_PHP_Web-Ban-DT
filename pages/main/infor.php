@@ -105,6 +105,12 @@ if (isset($_POST['sbChangePw'])) {
             <div class="my-order-name">Đơn hàng của tôi</div>
           </div>
         </div>
+        <div class="my-contact item-manager" style="padding-top: 8px;">
+          <div class="my-contact-title" style="display: flex;">
+            <div class="my-contact-icon" style="padding-right: 8px;"><i class="fa-solid fa-phone-volume"></i></i></div>
+            <div class="my-contact-name">Liên hệ của tôi</div>
+          </div>
+        </div>
 
       </div>
     </div>
@@ -230,6 +236,40 @@ if (isset($_POST['sbChangePw'])) {
             </table>
           </div>
         </div>
+        <div class="detail__my-order item-detail">
+          <div class="heading-edit-password mb-4">
+            <h2>Liên hệ của tôi</h2>
+          </div>
+          <div class="detail__my-order-content">
+            <table class="table table-hover">
+              <?php
+              $sql = "SELECT * from contacts where idUser = $id_user";
+              $query = mysqli_query($connect, $sql);
+              ?>
+              <thead>
+                <tr>
+                  <th>Ngày gửi</th>
+                  <th>Tiêu đề</th>
+                  <th>Nội dung</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                while ($row_contact = mysqli_fetch_array($query)) {
+                ?>
+                  <tr>
+                    <td><?php echo $row_contact['createdAt'] ?></td>
+                    <td><?php echo $row_contact['topic'] ?></td>
+                    <td><?php echo $row_contact['content'] ?></td>
+                  </tr>
+                <?php
+                }
+                ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>

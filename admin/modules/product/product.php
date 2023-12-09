@@ -57,7 +57,7 @@ $product = mysqli_query($connect, $sql);
                             <td><?php echo number_format($value['sellingPrice']) ?>VNĐ</td>
                             <td><?php echo $value['byCompany'] ?></td>
                             <td>
-                                <img src="<?php echo $value['image'] ?>" alt="" width="50px">
+                                <img src="./../img/product/<?php echo $value['image'] ?>" alt="" width="50px">
                             </td>
                             <td><?php echo $value['createdAt'] ?></td>
                             <td>

@@ -105,6 +105,7 @@
                         inner join products on cart_detail.idProduct = products.idProduct 
                         where idCart = $idCart and (SELECT statusCart from cart where idCart = $idCart) = 0";
       $query_cart_detail = mysqli_query($connect, $sql_cart_detail);
+      $num_rows = mysqli_num_rows($query_cart_detail);
     }
   }
   ?>
@@ -113,9 +114,9 @@
     <div class="container">
       <div class="cart-wrap">
         <div class="cart-content">
-          <form action="" class="form-cart">
+          <form action="" class="form-cart" style="padding-left: 12px;">
             <?php
-            if ($idCartResult != null && $id_user != null) {
+            if ($idCartResult != null && $id_user != null && $num_rows != 0) {
             ?>
               <div class="cart-body-left">
                 <div class="cart-heding hidden-xs">
@@ -140,7 +141,7 @@
                       <div class="col-md-11 col-10" style="text-align: center;">
                         <div class="row card-info" style="align-items: center;">
                           <div class="col-md-2 col-12 card-info-img">
-                            <a href=""><img class="cart-img" src="<?php echo $row_listcart['image'] ?>" alt=""></a>
+                            <a href=""><img class="cart-img" src="./img/product/<?php echo $row_listcart['image'] ?>" alt=""></a>
                           </div>
                           <div class="col-md-3 col-12">
                             <a href="" class="cart-name">
@@ -165,10 +166,21 @@
                               <?php
                               }
                               ?>
-                              <input type="text" value="<?php echo $row_listcart['quantity'] ?>" class="text-input" id="text_so_luong-<?php echo $row_listcart['idProduct'] ?>">
-                              <a href="pages/main/giohang/suasoluong.php?cong=<?php echo $row_listcart['idProduct'] ?>">
+                              <input readonly type="text" value="<?php echo $row_listcart['quantity'] ?>" class="text-input" id="text_so_luong-<?php echo $row_listcart['idProduct'] ?>">
+
+                              <?php
+                              if ($row_listcart['quantity'] < $row_listcart['qttStock']) {
+                              ?>
+                                <a href="pages/main/giohang/suasoluong.php?cong=<?php echo $row_listcart['idProduct'] ?>">
+                                  <input type="button" value="+" class="control">
+                                </a>
+                              <?php
+                              } else {
+                              ?>
                                 <input type="button" value="+" class="control">
-                              </a>
+                              <?php
+                              }
+                              ?>
                             </div>
                           </div>
                           <div class="col-md-2 col-12 hidden-xs" style="font-size: 16px;">
@@ -200,7 +212,7 @@
             ?>
 
             <?php
-            if ($idCartResult != null && $id_user != null) {
+            if ($idCartResult != null && $id_user != null  && $num_rows != 0) {
             ?>
 
               <div class="cart-body-right">

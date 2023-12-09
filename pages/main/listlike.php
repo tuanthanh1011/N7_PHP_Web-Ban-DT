@@ -66,10 +66,10 @@ if (isset($count['record_count']) && $count['record_count'] != 0) {
                         <a href="index.php?quanly=productDetail&id=<?php echo $row_dssp['idProduct'] ?>" class="product__new-item">
                             <div class="card" style="width: 100%">
                                 <div>
-                                    <img class="card-img-top" src="<?php echo $row_dssp['image'] ?>" alt="Card image cap">
+                                    <img class="card-img-top" src="./img/product/<?php echo $row_dssp['image'] ?>" alt="Card image cap">
                                     <form action="" class="hover-icon hidden-sm hidden-xs">
                                         <input type="hidden">
-                                        <a href="./pay.html" class="btn-add-to-cart" title="Mua ngay">
+                                        <a href="pages/main/giohang/themgiohang.php?idP=<?php echo $row_dssp['idProduct'] ?>&qtt=1" class="btn-add-to-cart" title="Mua ngay">
                                             <i class="fas fa-cart-plus"></i>
                                         </a>
                                         <a href="index.php?quanly=productDetail&id=<?php echo $row_dssp['idProduct'] ?>" class="quickview" title="Xem nhanh">
@@ -156,7 +156,7 @@ if (isset($count['record_count']) && $count['record_count'] != 0) {
 <?php
 } else {
 ?>
-    <h2 style="padding: 28px 0 0 205px">Không có sản phẩm yêu thích!</h2>
+    <h2 style="padding: 28px 0 0 20%">Không có sản phẩm yêu thích!</h2>
 <?php
 }
 ?>

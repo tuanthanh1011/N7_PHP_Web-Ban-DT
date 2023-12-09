@@ -1,3 +1,6 @@
+<?php
+session_start(); // Tạo mới phiên làm việc
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,11 +40,15 @@
     <script src="assets/main.js"></script>
 
 </head>
+<style>
+    .container {
+        max-width: 1300px !important;
+    }
+</style>
 
 <body>
     <div class="wrapper">
         <?php
-        session_start(); // Tạo mới phiên làm việc
         include("./admin/config/connect.php");
         include("./pages/header.php");
         include("./pages/main.php");

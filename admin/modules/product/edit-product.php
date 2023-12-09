@@ -127,7 +127,7 @@ if (isset($_POST['sbUpdate'])) {
                     <input readonly type="text" class="form-control" id="" name="tag" value="<?php echo $pro['tag'] ?>">
                     <label style="padding-top: 12px;" for="">Chọn TAG</label>
                     <select id="tag" name="tag">
-                        <option value="Default" selected>Default</option>
+                        <option value="DEFAULT" selected>Default</option>
                         <option value="HOT">Hot</option>
                         <option value="NEW">New</option>
                     </select>
@@ -136,7 +136,7 @@ if (isset($_POST['sbUpdate'])) {
                 <div class="form-group">
                     <label for="">Ảnh sản phẩm</label>
                     <br />
-                    <img style="width: 100px; padding-bottom: 12px" src="<?php echo $pro['image'] ?>" alt="">
+                    <img style="width: 100px; padding-bottom: 12px" src="./../img/product/<?php echo $pro['image'] ?>" alt="">
                     <input type="file" class="form-control" id="" name="image">
                 </div>
 

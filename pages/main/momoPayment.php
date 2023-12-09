@@ -33,8 +33,8 @@ $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
 $orderInfo = "Thanh toán qua MoMo";
 $amount = str_replace(',', '', $_POST['totalCart']);
 $orderId = time() . "";
-$redirectUrl = "http://localhost:88/N7_PHP_Website_BanDT/pages/main/paymentSuccess.php";
-$ipnUrl = "http://localhost:88/N7_PHP_Website_BanDT/pages/main/paymentSuccess.php";
+$redirectUrl = "http://localhost:88/N7_PHP_Website_BanDT/pages/main/handlePayment.php";
+$ipnUrl = "http://localhost:88/N7_PHP_Website_BanDT";
 $extraData = "";
 
 $requestId = time() . "";

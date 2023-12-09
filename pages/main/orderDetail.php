@@ -139,7 +139,7 @@
                                         <div class="col-md-11 col-10" style="text-align: center;">
                                             <div class="row card-info" style="align-items: center;">
                                                 <div class="col-md-2 col-12 card-info-img">
-                                                    <a href=""><img class="cart-img" src="<?php echo $row_listcart['image'] ?>" alt=""></a>
+                                                    <a href=""><img class="cart-img" src="./img/product/<?php echo $row_listcart['image'] ?>" alt=""></a>
                                                 </div>
 
                                                 <div class="col-md-3 col-12">
@@ -152,9 +152,7 @@
                                                 </div>
                                                 <div class="col-md-3 col-12">
                                                     <div class="cart-quantity" style="margin-left: 30px;">
-
-                                                        <input type="text" value="<?php echo $row_listcart['quantity'] ?>" class="text-input" id="text_so_luong-<?php echo $row_listcart['idProduct'] ?>">
-
+                                                        <span value="" class="text-input"><?php echo $row_listcart['quantity'] ?> </span>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2 col-12 hidden-xs" style="font-size: 16px; padding-left: 36px">

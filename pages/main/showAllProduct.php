@@ -26,7 +26,7 @@
 $currentPage = $_GET['page'];
 
 // Số lượng sản phẩm của 1 trang
-$quantityOfAPage = 4;
+$quantityOfAPage = 8;
 
 // Limit và offset dùng phân trang
 $offset = ($currentPage - 1) * $quantityOfAPage;
@@ -36,16 +36,28 @@ $limit = $quantityOfAPage;
 $url = '';
 
 // Xử lý khi muốn xem sp tìm kiếm hoặc xem all sp
-if (isset($_GET['quanly']) && isset($_GET['page']) && isset($_GET['search'])) {
+if (isset($_GET['quanly']) && isset($_GET['page']) && isset($_GET['search']) && !isset($_GET['order'])) {
     $search = !empty($_POST['search']) ? $_POST['search'] : $_GET['search'];
     $titlePage = 'Tìm kiếm sản phẩm: ' . $search;
     $sql_dssp = "SELECT DISTINCT * FROM products WHERE name LIKE '%$search%' LIMIT $limit OFFSET $offset";
     $url = "showAllProduct&search=" . $search . "&page=";
 } else if (isset($_GET['quanly']) && isset($_GET['page'])) {
     $titlePage = 'Tất cả sản phẩm';
-    $sql_dssp = "SELECT DISTINCT * FROM products LIMIT $limit
-    OFFSET $offset";
+    $sql_dssp = "SELECT DISTINCT * FROM products LIMIT $limit OFFSET $offset";
     $url = "showAllProduct&page=";
+}
+
+if (isset($_GET['quanly']) && isset($_GET['page']) && isset($_GET['search']) && isset($_GET['order'])) {
+    $orderby = $_GET['order'];
+    $search = !empty($_POST['search']) ? $_POST['search'] : $_GET['search'];
+    $titlePage = 'Tìm kiếm sản phẩm: ' . $search;
+    $sql_dssp = "SELECT DISTINCT * FROM products WHERE name LIKE '%$search%' order by sellingPrice $orderby LIMIT $limit OFFSET $offset";
+    $url = "showAllProduct&order=" . $orderby . "&search=" . $search . "&page=";
+} else if (isset($_GET['quanly']) && isset($_GET['page']) && isset($_GET['order'])) {
+    $orderby = $_GET['order'];
+    $titlePage = 'Tất cả sản phẩm';
+    $sql_dssp = "SELECT DISTINCT * FROM products order by sellingPrice $orderby LIMIT $limit OFFSET $offset";
+    $url = "showAllProduct&order=" . $orderby . "&page=";
 }
 
 $query_dssp = mysqli_query($connect, $sql_dssp);
@@ -70,7 +82,17 @@ $numberPage = round($count1 / $quantityOfAPage) < ($count1 / $quantityOfAPage) ?
 <div class="container">
 
     <div class="product__yml">
-        <h3 class="product__yml title-product"><?php echo $titlePage ?></h3>
+        <div style="display: flex; align-items: center; justify-content: space-between; ">
+            <h3 class="product__yml title-product"><?php echo $titlePage ?></h3>
+            <div style="font-size: 16px;">
+                <span>Sắp xếp theo:</span>
+                <select id="sapxepSelect" style="margin: 0 12px; padding: 8px">
+                    <option value="DEFAULT">---Mặc định---</option>
+                    <option value="ASC">Thấp đến cao</option>
+                    <option value="DESC">Cao đến thấp</option>
+                </select>
+            </div>
+        </div>
         <div class="row">
             <?php
             while ($row_dssp = mysqli_fetch_array($query_dssp)) {
@@ -79,10 +101,10 @@ $numberPage = round($count1 / $quantityOfAPage) < ($count1 / $quantityOfAPage) ?
                     <a href="index.php?quanly=productDetail&id=<?php echo $row_dssp['idProduct'] ?>" class="product__new-item">
                         <div class="card" style="width: 100%">
                             <div>
-                                <img class="card-img-top" src="<?php echo $row_dssp['image'] ?>" alt="Card image cap">
+                                <img class="card-img-top" src="./img/product/<?php echo $row_dssp['image'] ?>" alt="Card image cap">
                                 <form action="" class="hover-icon hidden-sm hidden-xs">
                                     <input type="hidden">
-                                    <a href="./pay.html" class="btn-add-to-cart" title="Mua ngay">
+                                    <a href="pages/main/giohang/themgiohang.php?idP=<?php echo $row_dssp['idProduct'] ?>&qtt=1" class="btn-add-to-cart" title="Thêm vào giỏ hàng">
                                         <i class="fas fa-cart-plus"></i>
                                     </a>
                                     <a href="index.php?quanly=productDetail&id=<?php echo $row_dssp['idProduct'] ?>" class="quickview" title="Xem nhanh">
@@ -191,3 +213,55 @@ $numberPage = round($count1 / $quantityOfAPage) < ($count1 / $quantityOfAPage) ?
         ?>
     </div>
 </div>
+
+<script>
+    // Lấy đối tượng select
+    var sapxepSelect = document.getElementById("sapxepSelect");
+
+    // Lấy giá trị của tham số "search" từ URL hiện tại
+    var urlSearchParams = new URLSearchParams(window.location.search);
+    var searchValue = urlSearchParams.get("search");
+
+    // Thêm sự kiện khi select box thay đổi
+    sapxepSelect.addEventListener("change", function() {
+        var selectedValue = sapxepSelect.value;
+
+        // Lấy URL hiện tại
+        var currentUrl = window.location.href;
+
+        // Tạo một đối tượng URL từ URL hiện tại
+        var url = new URL(currentUrl);
+
+        // Thiết lập giá trị cho tham số "quanly"
+        url.searchParams.set('quanly', 'showAllProduct');
+
+        // Thiết lập giá trị cho tham số "page"
+        url.searchParams.set('page', '1');
+
+        // Thiết lập giá trị cho tham số "order" tùy thuộc vào lựa chọn
+        if (selectedValue === "ASC") {
+            url.searchParams.set('order', 'ASC');
+        } else if (selectedValue === "DEFAULT") {
+            // Không cần thiết lập 'order' nếu giá trị là 'DEFAULT'
+            url.searchParams.delete('order');
+        } else if (selectedValue === "DESC") {
+            url.searchParams.set('order', 'DESC');
+        }
+
+        // Chuyển hướng tới URL mới
+        window.location.href = url.toString();
+    });
+
+    // Kiểm tra xem đã lưu giá trị nào trong sessionStorage chưa
+    var selectedOption = sessionStorage.getItem('selectedOption');
+    if (selectedOption) {
+        // Nếu có, thiết lập lại giá trị đã chọn
+        sapxepSelect.value = selectedOption;
+    }
+
+    // Lưu giá trị khi người dùng chọn
+    sapxepSelect.addEventListener("change", function() {
+        var selectedValue = sapxepSelect.value;
+        sessionStorage.setItem('selectedOption', selectedValue);
+    });
+</script>
