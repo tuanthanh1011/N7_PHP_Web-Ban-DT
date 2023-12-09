@@ -120,7 +120,7 @@
                 <?php echo $row_detail['short_description'] ?>
               </p>
               <p>
-                <img src="admin/news_management/uploads/<?php echo $row_detail['image'] ?>" alt="">
+                <img src="./img/news/<?php echo $row_detail['image'] ?>" alt="">
               </p>
 
               <p>
