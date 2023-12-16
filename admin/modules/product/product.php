@@ -1,8 +1,36 @@
 <?php
-$sql = "SELECT * FROM products";
-$product = mysqli_query($connect, $sql);
 
+$sql_product = "SELECT * FROM products WHERE 1 = 1";
+$sql_li = "SELECT COUNT(idProduct) as total from products";
+
+if(isset($_GET['product-name'])){
+    $keyword = !empty($_GET['product-name']) ? $_GET['product-name'] : '';
+    $sql_product .= " AND products.name LIKE '%$keyword%'";
+    $sql_li = "SELECT COUNT(idProduct) as total from products WHERE products.name LIKE '%$keyword%'";
+}
+
+$result = mysqli_query($connect, $sql_li);
+$row = mysqli_fetch_assoc($result);
+$total_records = $row['total'];
+
+$current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+$limit = 6;
+
+$total_page = ceil($total_records / $limit);
+
+if($current_page > $total_page){
+    $current_page = $total_page;
+}
+else if($current_page < 1){
+    $current_page = 1;
+}
+
+$start = ($current_page - 1) * $limit;
+$sql_product .= " LIMIT $start, $limit";
+
+$product = mysqli_query($connect, $sql_product);
 ?>
+
 <!-- =============================================== -->
 
 <section class="content-header">
@@ -33,6 +61,14 @@ $product = mysqli_query($connect, $sql);
                     <i class="fa fa-times"></i></button>
             </div>
         </div>
+
+        <!-- <div class="search">
+            <form action="" method="get">
+                <input type="text" name="product-name" placeholder="Nhập tên sản phẩm" value="<?php isset($_GET['product-name']) ? $keyword : ' '?>"/>
+                <input type="submit" value="Tìm kiếm">
+            </form>
+        </div> -->
+
         <div class="box-body">
             <a href="../admin/index.php?quanly=add-product" class="btn btn-success" style="margin-bottom: 12px">Thêm mới sản phẩm</a>
             <table class="table table-bordered table-hover">
@@ -49,6 +85,8 @@ $product = mysqli_query($connect, $sql);
                     </tr>
                 </thead>
                 <tbody>
+                   
+                   
                     <?php foreach ($product as $key => $value) : ?>
                         <tr>
                             <td><?php echo $value['idProduct'] ?></td>
@@ -70,10 +108,68 @@ $product = mysqli_query($connect, $sql);
                             </td>
                         </tr>
                     <?php endforeach ?>
-
+                    
                 </tbody>
             </table>
-        </div>
+            <div class="pagination">
+                    <?php 
+
+                        if(isset($_GET['product-name'])){
+                            $search = $_GET['product-name'];
+                        }else{
+                            $search = '';
+                        }
+
+                        if ($current_page > 1 && $total_page > 1){
+                            
+                            echo '<a class="link-page" href="index.php?quanly=showAllProduct&page='.($current_page-1).'">Prev</a>  ';
+                        }
+
+                        for ($i = 1; $i <= $total_page; $i++){
+                           
+                            if ($i == $current_page){
+                                echo '<span class="current-page">'.$i.'</span>  ';
+                            }
+                            else{
+                                echo '<a class="link-page" href="index.php?quanly=showAllProduct&page='.$i.'">'.$i.'</a>  ';
+                            }
+                        }
+            
+                        if ($current_page < $total_page && $total_page > 1){
+                            echo '<a class="link-page" href="index.php?quanly=showAllProduct&page='.($current_page+1).'">Next</a>  ';
+                        }
+                    ?>
+                    </div>
+        </div> 
 
 </section>
 </div>
+<style>
+    .pagination{
+        float: right;
+    }
+
+    .current-page{
+        border: 1px solid #333;
+        color: white;
+        background-color: #333;
+        padding: 4px 10px;
+    }
+
+    .link-page{
+        border: 1px solid #333;
+        color: black;
+       
+        padding: 4px 10px;
+    }
+
+    .link-page:hover{
+        color: #333;
+    }
+
+    .search-product{
+        float: right;
+        margin-right: 30px;
+    }
+
+</style>

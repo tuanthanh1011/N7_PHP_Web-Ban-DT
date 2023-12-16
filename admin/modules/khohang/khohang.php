@@ -12,8 +12,29 @@
 </style>
 
 <?php
-$sql = "SELECT * FROM products";
-$product = mysqli_query($connect, $sql);
+// $sql = "SELECT * FROM products";
+// $product = mysqli_query($connect, $sql);
+
+$sql = "SELECT COUNT(idProduct) as total from products";
+$result = mysqli_query($connect, $sql);
+$row = mysqli_fetch_assoc($result);
+$total_records = $row['total'];
+
+$current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+$limit = 7;
+
+$total_page = ceil($total_records / $limit);
+
+if($current_page > $total_page){
+    $current_page = $total_page;
+}
+else if($current_page < 1){
+    $current_page = 1;
+}
+
+$start = ($current_page - 1) * $limit;
+
+$product = mysqli_query($connect, "SELECT * FROM products LIMIT $start, $limit");
 
 if (isset($_POST['sbUpdateQtt'])) {
     $id_pro = $_POST['idP'];
@@ -74,7 +95,53 @@ if (isset($_POST['sbUpdateQtt'])) {
 
                 </tbody>
             </table>
+            <div class="pagination">
+                    <?php 
+
+                        if ($current_page > 1 && $total_page > 1){
+                            echo '<a class="link-page" href="index.php?quanly=warehouse&page='.($current_page-1).'">Prev</a>  ';
+                        }
+
+                        for ($i = 1; $i <= $total_page; $i++){
+                           
+                            if ($i == $current_page){
+                                echo '<span class="current-page">'.$i.'</span>  ';
+                            }
+                            else{
+                                echo '<a class="link-page" href="index.php?quanly=warehouse&page='.$i.'">'.$i.'</a>  ';
+                            }
+                        }
+            
+                        if ($current_page < $total_page && $total_page > 1){
+                            echo '<a class="link-page" href="index.php?quanly=warehouse&page='.($current_page+1).'">Next</a>  ';
+                        }
+                    ?>
+                    </div>
         </div>
 
 </section>
 </div>
+<style>
+    .pagination{
+        float: right;
+    }
+
+    .current-page{
+        border: 1px solid #333;
+        color: white;
+        background-color: #333;
+        padding: 4px 10px;
+    }
+
+    .link-page{
+        border: 1px solid #333;
+        color: black;
+       
+        padding: 4px 10px;
+    }
+
+    .link-page:hover{
+        color: #333;
+    }
+
+</style>
